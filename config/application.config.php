@@ -3,7 +3,7 @@
 // Set up modules:
 $modules = [
     'Laminas\Form', 'Laminas\Router', 'LmcRbacMvc',
-    'VuFindTheme', 'VuFindSearch', 'VuFind', 'VuFindAdmin', 'VuFindApi'
+    'VuFindTheme', 'VuFindSearch', 'VuFind', 'VuFindAdmin', 'VuFindApi', 'GEI'
 ];
 if (PHP_SAPI == 'cli' && APPLICATION_ENV !== 'testing') {
     $modules[] = 'VuFindConsole';

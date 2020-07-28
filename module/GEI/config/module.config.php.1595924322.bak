@@ -1,0 +1,7 @@
+<?php
+namespace GEI\Module\Configuration;
+
+$config = [
+];
+
+return $config;
