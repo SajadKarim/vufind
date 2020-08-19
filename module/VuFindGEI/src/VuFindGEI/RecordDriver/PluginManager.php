@@ -1,6 +1,6 @@
 <?php
 
-namespace GEI\RecordDriver;
+namespace VuFindGEI\RecordDriver;
 
 class PluginManager extends \VuFind\RecordDriver\PluginManager
 {
