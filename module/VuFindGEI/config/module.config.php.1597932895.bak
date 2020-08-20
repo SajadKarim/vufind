@@ -7,13 +7,11 @@ return array (
     array (
       'VuFindGEI\\RecordDriver\\PluginManager' => 'VuFindGEI\\ServiceManager\\AbstractPluginManagerFactory',
       'VuFindGEI\\Autocomplete\\Suggester' => 'VuFind\\Autocomplete\\SuggesterFactory',
-      'VuFindGEI\\Search\\Solr\\HierarchicalFacetHelper' => 'Laminas\\ServiceManager\\Factory\\InvokableFactory',
     ),
     'aliases' => 
     array (
       'VuFind\\RecordDriver\\PluginManager' => 'VuFindGEI\\RecordDriver\\PluginManager',
       'VuFind\\Autocomplete\\Suggester' => 'VuFindGEI\\Autocomplete\\Suggester',
-      'VuFind\\Search\\Solr\\HierarchicalFacetHelper' => 'VuFindGEI\\Search\\Solr\\HierarchicalFacetHelper',
     ),
   ),
   'vufind' => 

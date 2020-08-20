@@ -71,39 +71,39 @@ $headTitle = $this->slot('head-title')
     <div class="hidden-print search-controls hero">
 	  <div class="container search-container">
 		  <div class="col-sm-9 search-info">
-			<? if (($recordTotal = $this->results->getResultTotal()) > 0): ?>
+			<?php if (($recordTotal = $this->results->getResultTotal()) > 0): ?>
 			  <?=$this->transEsc("Showing")?>
 			  <strong><?=$this->localizedNumber($this->results->getStartRecord())?></strong> - <strong><?=$this->localizedNumber($this->results->getEndRecord())?></strong>
-			  <? if (!isset($this->skipTotalCount)): ?>
-				<? $this->layout()->srmessage = $this->transEsc('result_count', ['%%count%%' => $this->localizedNumber($recordTotal)]); ?>
+			  <?php if (!isset($this->skipTotalCount)): ?>
+				<?php $this->layout()->srmessage = $this->transEsc('result_count', ['%%count%%' => $this->localizedNumber($recordTotal)]); ?>
 				<?=$this->transEsc('of')?> <strong><?=$this->localizedNumber($recordTotal)?></strong>
-			  <? endif; ?>
-			  <? if (isset($this->overrideSearchHeading)): ?>
+			  <?php endif; ?>
+			  <?php if (isset($this->overrideSearchHeading)): ?>
 				<?=$this->overrideSearchHeading?>
-			  <? elseif ($this->params->getSearchType() == 'basic'): ?>
+			  <?php elseif ($this->params->getSearchType() == 'basic'): ?>
 				<?=$this->transEsc('for search')?>: <strong>'<?=$this->escapeHtml($lookforshort)?>'</strong>,
-			  <? endif; ?>
-			  <? if ($qtime = $this->results->getQuerySpeed()): ?>
+			  <?php endif; ?>
+			  <?php if ($qtime = $this->results->getQuerySpeed()): ?>
 				<?=$this->transEsc('query time')?>: <?=$this->localizedNumber($qtime, 2).$this->transEsc('seconds_abbrev')?>
-			  <? endif; ?>
-			<? else: ?>
+			  <?php endif; ?>
+			<?php else: ?>
 			  <h2><?=$this->transEsc('nohit_heading')?></h2>
-			<? endif; ?>
+			<?php endif; ?>
 			
 			<?=$this->render('search/controls/view.phtml')?> <!-- scheel -->
 			
 		  </div>
 
-		  <? if ($recordTotal > 0): ?>
+		  <?php if ($recordTotal > 0): ?>
 			<div class="col-sm-3">
 			  <?=$this->render('search/controls/limit.phtml')?>
 			  <?=$this->render('search/controls/sort.phtml')?>
 			</div>
-		  <? endif; ?>
+		  <?php endif; ?>
 	  </div>
     </div>
-    <? /* End Listing Options */ ?>
-<? endif; ?>
+    <?php /* End Listing Options */ ?>
+<?php endif; ?>
 <!-- @Scheel - end -->
 
 <div class="<?=$this->layoutClass('mainbody')?>">
@@ -129,9 +129,9 @@ $headTitle = $this->slot('head-title')
 
     <?php if ($recordTotal > 0): ?>
       <div class="search-controls">
-        <?=$this->render('search/controls/limit.phtml')?>
-        <?=$this->render('search/controls/sort.phtml')?>
-        <?=$this->render('search/controls/view.phtml')?>
+        <?//=$this->render('search/controls/limit.phtml')?>
+        <?//=$this->render('search/controls/sort.phtml')?>
+        <?//=$this->render('search/controls/view.phtml')?>
       </div>
     <?php endif; ?>
   </div>

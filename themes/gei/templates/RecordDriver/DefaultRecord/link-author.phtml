@@ -1,21 +1,11 @@
-<!-- @Scheel - old code
 <?php $searchRoute = $this->searchOptions($this->driver->getSourceIdentifier())->getSearchAction(); ?>
 <?php if ($searchRoute === 'search-results'): // override search-results with author module ?>
   <?=$this->url('author-home')?>?author=<?=urlencode($this->lookfor)?>
 <?php else: ?>
   <?=$this->url($searchRoute)?>?lookfor=%22<?=urlencode($this->lookfor)?>%22&amp;type=Author
 <?php endif; ?>
--->
-<!-- @Scheel - new code -->
-<?
-	$uri = $_SERVER['REQUEST_URI'];
-	$uri2 = $this->url('search-results');
-	if (strrpos($uri, $uri2) === false) {
-		$uri = $uri2.'?';//we are not on a result page
-	}else{
-		$uri = $uri.'&';
-	}
-?>
-<?=$uri?>filter[]=person_str_mv:%22<?=urlencode($this->lookfor)?>%22
+<!-- @Scheel - new code
+
+deleted code here due to exception -->
 <!-- @Scheel - end -->
 
