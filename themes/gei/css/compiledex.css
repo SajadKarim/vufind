@@ -9160,3 +9160,19 @@ i.arrow-down {
 .autocomplete-results .item.loading{background-color:#fff}
 .autocomplete-results .item.selected{background-color:#e2edf6}
 .autocomplete-results .item small{display:block;color:darkgray}
+
+.home-facet-container{
+ background-color:white;
+}
+
+header .navbar .searchForm {
+    display: block !important;
+}
+
+.search-controls {
+    text-align: left;
+}
+
+.mainbody {
+    width: 65%;
+}

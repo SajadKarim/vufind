@@ -90,10 +90,10 @@ $headTitle = $this->slot('head-title')
 			  <h2><?=$this->transEsc('nohit_heading')?></h2>
 			<?php endif; ?>
 			
-			<?=$this->render('search/controls/view.phtml')?> <!-- scheel -->
 			
 		  </div>
 
+			<?=$this->render('search/controls/view.phtml')?> <!-- scheel -->
 		  <?php if ($recordTotal > 0): ?>
 			<div class="col-sm-3">
 			  <?=$this->render('search/controls/limit.phtml')?>
@@ -105,7 +105,8 @@ $headTitle = $this->slot('head-title')
     <?php /* End Listing Options */ ?>
 <?php endif; ?>
 <!-- @Scheel - end -->
-
+<div>&nbsp;</div>
+<div>&nbsp;</div>
 <div class="<?=$this->layoutClass('mainbody')?>">
   <?php if (($recordTotal = $this->results->getResultTotal()) > 0): // only display these at very top if we have results ?>
     <?php foreach ($this->results->getRecommendations('top') as $index => $current): ?>
