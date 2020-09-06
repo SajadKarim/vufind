@@ -1,0 +1,275 @@
+<?=$this->doctype('HTML5')?>
+<html lang="<?=$this->layout()->userLang?>"<?php if ($this->layout()->rtl): ?> dir="rtl"<?php endif; ?>>
+  <head>
+    <?php $this->headThemeResources(); ?>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <?=$this->headMeta()?>
+    <?=$this->headTitle()?>
+    <?php
+      // Set up OpenSearch link:
+      $this->headLink(
+        [
+          'href' => $this->url('search-opensearch') . '?method=describe',
+          'type' => 'application/opensearchdescription+xml',
+          'title' => $this->transEsc('Library Catalog Search'),
+          'rel' => 'search'
+        ]
+      );
+    ?>
+    <!-- RTL styling -->
+    <?php if ($this->layout()->rtl) {
+      $this->headLink()->appendStylesheet('vendor/bootstrap-rtl.min.css');
+    } ?>
+    <?=$this->headLink()?>
+    <?=$this->headStyle()?>
+    <?php
+      // Collect small scripts together and append as one block:
+      $appendScripts = [];
+
+      if (!isset($this->renderingError)) {
+        // Add translation strings
+        $this->jsTranslations()->addStrings(
+          [
+            'add_tag_success' => 'add_tag_success',
+            'bulk_email_success' => 'bulk_email_success',
+            'bulk_noitems_advice' => 'bulk_noitems_advice',
+            'bulk_save_success' => 'bulk_save_success',
+            'close' => 'close',
+            'collection_empty' => 'collection_empty',
+            'error_occurred' => 'An error has occurred',
+            'go_to_list' => 'go_to_list',
+            'hold_available' => 'hold_available',
+            'libphonenumber_invalid' => 'libphonenumber_invalid',
+            'libphonenumber_invalidcountry' => 'libphonenumber_invalidcountry',
+            'libphonenumber_invalidregion' => 'libphonenumber_invalidregion',
+            'libphonenumber_notanumber' => 'libphonenumber_notanumber',
+            'libphonenumber_toolong' => 'libphonenumber_toolong',
+            'libphonenumber_tooshort' => 'libphonenumber_tooshort',
+            'libphonenumber_tooshortidd' => 'libphonenumber_tooshortidd',
+            'loading' => 'Loading',
+            'more' => 'more',
+            // @Scheel - new code
+            'less' => 'less',
+            'Unknown' => 'Unknown',
+            'Unknown' => 'Unknown',
+            // @Scheel - end
+            'number_thousands_separator' => [
+                'number_thousands_separator', null, ','
+            ],
+            /* @Scheel - old code
+            'sms_success' => 'sms_success'
+            */
+            // @Scheel - new code
+            'exclude_facet' => 'exclude_facet'
+            // @Scheel - end
+            ]
+        );
+        // Add libphonenumber.js strings
+        $this->jsTranslations()->addStrings(
+          [
+            "Phone number invalid" => 'libphonenumber_invalid',
+            "Invalid country calling code" => 'libphonenumber_invalidcountry',
+            "Invalid region code" => 'libphonenumber_invalidregion',
+            "The string supplied did not seem to be a phone number" => 'libphonenumber_notanumber',
+            "The string supplied is too long to be a phone number" => 'libphonenumber_toolong',
+            "The string supplied is too short to be a phone number" => 'libphonenumber_tooshort',
+            "Phone number too short after IDD" => 'libphonenumber_tooshortidd'
+          ]
+        );
+        // Deal with cart stuff:
+        $cart = $this->cart();
+        if ($cart->isActive()) {
+          $this->headScript()->appendFile("vendor/js.cookie.js");
+          $this->headScript()->appendFile("cart.js");
+          $domain = $cart->getCookieDomain();
+          if (!empty($domain)) {
+            $appendScripts[] = 'VuFind.cart.setDomain("' . $domain . '");';
+          }
+          $cookiePath = $cart->getCookiePath();
+          if (!empty($cookiePath)) {
+            $appendScripts[] = 'VuFind.cart.setCookiePath("' . $cookiePath . '");';
+          }
+          $cookieSameSite = $cart->getCookieSameSite();
+          if (null !== $cookieSameSite) {
+            $appendScripts[] = 'VuFind.cart.setCookieSameSite("' . $cookieSameSite . '");';
+          }
+          $this->jsTranslations()->addStrings(
+            [
+              'addBookBag' => 'Add to Book Bag',
+              'bookbagFull' => 'bookbag_full_msg',
+              'bookbagMax' => $cart->getMaxSize(),
+              'bookbagStatusFull' => 'bookbag_full',
+              'confirmDelete' => 'confirm_delete',
+              'confirmEmpty' => 'bookbag_confirm_empty',
+              'itemsAddBag' => 'items_added_to_bookbag',
+              'itemsInBag' => 'items_already_in_bookbag',
+              'removeBookBag' => 'Remove from Book Bag',
+              'viewBookBag' => 'View Book Bag'
+            ]
+          );
+        }
+        $this->headScript()->prependScript(
+          'var userIsLoggedIn = ' . ($this->auth()->isLoggedIn() ? 'true' : 'false') . ';'
+        );
+      }
+
+      // Session keep-alive
+      if ($this->keepAlive()) {
+          $appendScripts[] = 'var keepAliveInterval = ' . $this->keepAlive() . ';';
+          $this->headScript()->appendFile("keep_alive.js");
+      }
+
+      // If account ajax is active, load script and add language strings
+      $account = $this->auth()->getManager();
+      if ($account->ajaxEnabled()) {
+        $this->headScript()->appendFile("account_ajax.js");
+        $this->jsTranslations()->addStrings(
+          [
+            'account_checkouts_due' => 'account_checkouts_due',
+            'account_checkouts_overdue' => 'account_checkouts_overdue',
+            'account_has_alerts' => 'account_has_alerts',
+            'account_normal_checkouts' => 'account_normal_checkouts',
+            'account_requests_available' => 'account_requests_available',
+            'account_requests_in_transit' => 'account_requests_in_transit',
+          ]
+        );
+      }
+
+      $root = rtrim($this->url('home'), '/');
+      $translations = $this->jsTranslations()->getJSON();
+      $dsb = DEFAULT_SEARCH_BACKEND;
+      $appendScripts[] = <<<JS
+VuFind.path = '{$root}';
+VuFind.defaultSearchBackend = '{$dsb}';
+VuFind.addTranslations({$translations});
+// @Scheel - new code
+VuFind.userLang = '{$this->layout()->userLang}';
+// @Scheel - end
+JS;
+      $this->headScript()->appendScript(implode("\n", $appendScripts));
+
+      if ($this->config()->ajaxCoversEnabled()) {
+          $this->headScript()->appendFile("covers.js");
+      }
+    ?>
+    <?=$this->headScript()?>
+  </head>
+  <body class="template-dir-<?=$this->templateDir?> template-name-<?=$this->templateName?> <?=$this->layoutClass('offcanvas-row')?><?php if ($this->layout()->rtl): ?> rtl<?php endif; ?>">
+    <?php // Set up the search box -- there are three possible cases:
+      // 1. No search box was set; we should default to the normal box
+      // 2. It was set to false; we should display nothing
+      // 3. It is set to a custom string; we should display the provided version
+      // Set up default search box if no data was provided from the template;
+      // this covers case 1.  Cases 2 and 3 are then covered by logic below.
+      if (!isset($this->layout()->searchbox)) {
+        $this->layout()->searchbox = $this->render('search/searchbox.phtml');
+      }
+    ?>
+    <!--  @Scheel - commeting out old code
+    <header class="hidden-print">
+    -->
+    <!-- @Scheel - new code -->
+    <header class="hidden-print edu-header">
+    <!-- @Scheel - end -->
+      <?php if (isset($this->layout()->srmessage)): // message for benefit of screen-reader users ?>
+        <span class="sr-only" role="heading" aria-level="1"><?=$this->layout()->srmessage ?></span>
+      <?php endif; ?>
+      <a class="sr-only" href="#content"><?=$this->transEsc('Skip to content') ?></a>
+      <?=$this->render('header.phtml')?>
+    </header>
+    <nav class="breadcrumbs" aria-label="<?=$this->transEsc('Breadcrumbs') ?>">
+      <div class="container">
+        <?php if((!isset($this->layout()->showBreadcrumbs) || $this->layout()->showBreadcrumbs == true)
+          && !empty($this->layout()->breadcrumbs)
+          && $this->layout()->breadcrumbs !== false
+        ): ?>
+          <!-- @Scheel - old code
+          <ul class="breadcrumb hidden-print">
+            <?php if(is_array($this->layout()->breadcrumbs)): ?>
+              <?php if(count($this->layout()->breadcrumbs) > 1): ?>
+                <?=$this->render('breadcrumbs/multi.phtml', [
+                    'parents' => $this->layout()->breadcrumbs,
+                    'title' => $this->layout()->title,
+                    'from' => $this->layout()->from
+                  ]) ?>
+              <?php else: ?>
+                <?=$this->render('breadcrumbs/default.phtml', [
+                    'parents' => $this->layout()->breadcrumbs,
+                    'title' => $this->layout()->title
+                  ]) ?>
+              <?php endif; ?>
+            <?php else: ?>
+              <?=$this->layout()->breadcrumbs ?>
+            <?php endif; ?>
+          </ul>
+          -->
+        <?php endif; ?>
+      </div>
+    </nav>
+    <!-- @Scheel - new code -->
+    <?php if ($this->layout()->searchbox == false): ?>
+		<div class="edu-module hidden-print">
+			<div class="hero hero--bgimg">
+				<div class="container">
+					<header class="hero__header page-margins"><?=$this->transEsc('tagline_1')?><span class="hero__header__em"><?=$this->transEsc('tagline_2')?></span></header>
+				</div>
+			</div>
+			<div class="edu-module-header">
+				<div class="page-margins nopr">
+				  <nav class="edu-nav edu-h-nav edu-module-header-nav">
+					<ul class="edu-nav__list">
+					
+					  <li class="edu-nav__item <?php if($this->layout()->edunav==null):?>edu-nav-item--active<?php else: ?><?=$this->layout()->edunav[0] ?><?php endif; ?>"><a href="<?=$this->url('home')?>" class="edu-nav__item__a"><?=$this->transEsc('Research')?></a></li>
+					  <!--li class="edu-nav__item <?=$this->layout()->edunav[1] ?>"><a href="<?=$this->url('search-advanced')?>" class="edu-nav__item__a"><?=$this->transEsc('Advanced Search')?></a></li-->
+					  <?php $account = $this->auth()->getManager(); ?>
+					  
+					  <li class="edu-nav__item <?=$this->layout()->edunav[2] ?><?php if(!is_object($account) || !$account->isLoggedIn()): ?>logoutOptions hidden<?php endif; ?>"><a href="<?=$this->url('myresearch-favorites')?>" class="edu-nav__item__a"><?=$this->transEsc('Favorites')?></a></li>
+					  <li class="edu-nav__item <?=$this->layout()->edunav[3] ?><?php if(!is_object($account) || !$account->isLoggedIn()): ?>logoutOptions hidden<?php endif; ?>"><a href="<?=$this->url('search-history')?>" class="edu-nav__item__a"><?=$this->transEsc('history_saved_searches')?></a></li>
+					  
+					  <!--li class="edu-nav__item"<?=$this->layout()->edunav[0] ?>><a href="<?=$this->url('browse-home')?>" class="edu-nav__item__a"><?=$this->transEsc('Browse the Catalog')?></a></li>
+					  <li class="edu-nav__item"<?=$this->layout()->edunav[0] ?>><a href="<?=$this->url('alphabrowse-home')?>" class="edu-nav__item__a"><?=$this->transEsc('Browse Alphabetically')?></a></li-->
+					  <?php if ($this->layout()->recordview != null && $this->layout()->recordview == true): ?>
+						<li class="edu-nav-item--active"><p class="edu-nav__item__a"><?=$this->transEsc('collection_view_record')?></p></li>
+					  <?php endif; ?>
+					  <?php if ($this->layout()->editview != null && $this->layout()->editview == true): ?>
+						<li class="edu-nav-item--active"><p class="edu-nav__item__a"><?=$this->transEsc('Edit')?></p></li>
+					  <?php endif; ?>
+					  <?php if ($this->layout()->loginview != null && $this->layout()->loginview == true): ?>
+						<li class="edu-nav-item--active"><p class="edu-nav__item__a"><?=$this->transEsc('Login')?></p></li>
+					  <?php endif; ?>
+					  
+					  <!--li class="edu-nav__item right" style="float:right;"><a href="<?=$this->url('browse-home')?>" class="edu-nav__item__a"><?=$this->transEsc('Information')?></a></li-->
+					  <li class="edu-nav__item right" style="float:right;"><a href="<?=$this->url('help-home')?>?topic=itbc&amp;_=<?=time() ?>" data-lightbox class="edu-nav__item__a"><?=$this->transEsc('information')?></a></li>
+					  <li class="edu-nav__item right" style="float:right;"><a href="<?=$this->url('help-home')?>?topic=tutorials&amp;_=<?=time() ?>" data-lightbox class="edu-nav__item__a"><?=$this->transEsc('tutorials')?></a></li>
+					</ul>
+				  </nav>
+				</div>
+			</div>
+		</div>
+  	<?php endif; ?>
+    <!-- @Scheel - end -->
+    <div role="main" class="main">
+      <div id="content" class="container">
+        <?=$this->layout()->content ?>
+      </div>
+    </div>
+    <?=$this->render('footer.phtml')?>
+    <!-- MODAL IN CASE WE NEED ONE -->
+    <div id="modal" class="modal fade hidden-print" tabindex="-1" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <div class="modal-body"><?=$this->transEsc('Loading') ?>...</div>
+        </div>
+      </div>
+    </div>
+    <div class="offcanvas-overlay" data-toggle="offcanvas"></div>
+    <?=$this->googleanalytics()?>
+    <?=$this->piwik()?>
+    <?php foreach ($this->captcha()->js() as $jsInclude):?>
+      <?=$this->inlineScript(\Laminas\View\Helper\HeadScript::FILE, $jsInclude, 'SET')?>
+    <?php endforeach; ?>
+  </body>
+</html>

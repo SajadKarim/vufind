@@ -1,0 +1,16 @@
+<!-- @Scheel - old code
+<?php $searchRoute = $this->searchOptions($this->driver->getSourceIdentifier())->getSearchAction(); ?>
+<?=$this->url($searchRoute)?>?lookfor=%22<?=urlencode($this->lookfor)?>%22&amp;type=Series
+-->
+<!-- @Scheel - new code -->
+<?
+	$uri = $_SERVER['REQUEST_URI'];
+	$uri2 = $this->url('search-results');
+	if (strrpos($uri, $uri2) === false) {
+		$uri = $uri2.'?';//we are not on a result page
+	}else{
+		$uri = $uri.'&';
+	}
+?>
+<?=$uri?>filter[]=topic_str_mv:%22<?=urlencode($this->lookfor)?>%22
+<!-- @Scheel - end -->
