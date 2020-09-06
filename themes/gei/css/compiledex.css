@@ -9074,10 +9074,10 @@ i.fa-star{
 	font-style: normal;
 }
 
-.location{
+/*.location{
 	float:left;
 	padding-right:5px;
-}
+}*/
 
 .arrow-up {
 	float: right;
@@ -9176,3 +9176,68 @@ header .navbar .searchForm {
 .mainbody {
     width: 65%;
 }
+
+.search-home-facets-ex
+{
+flex-flow: row wrap;
+display: flex;
+justify-content: center;
+}
+
+.home-facet-ex
+{
+//flex: 1;
+width: 33%;
+padding-bottom: 15px;
+position: relative;
+min-height: 1px;
+padding-left: 7px;
+padding-right: 7px;
+}
+
+.home-facet-ex h2
+{
+background: #B00045 none repeat scroll 0% 0%;
+color: #FFF;
+padding: 7px;
+min-height: 38px;
+border-top-right-radius: 15px;
+border-top-left-radius: 15px;
+}
+
+.home-facet-container-ex
+{
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+}
+
+.jstree-facet .jstree-icon {
+    width: 16px;
+    color: #B00045;
+}
+
+.facet-group-ex
+{
+//flex: 1;
+//width: 33%;
+padding-bottom: 15px;
+position: relative;
+min-height: 1px;
+padding-left: 7px;
+padding-right: 7px;
+}
+
+.facet-group-ex .title
+{
+width: 100%;
+background: #B00045 none repeat scroll 0% 0%;
+color: #FFF;
+padding: 7px;
+min-height: 38px;
+border-top-right-radius: 15px;
+border-top-left-radius: 15px;
+}
+

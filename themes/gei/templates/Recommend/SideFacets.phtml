@@ -63,12 +63,12 @@
     <!-- @Scheel - new code -->
     <?php if ((isset($title) && substr($title, 0,  9) == 'catalogue') && !isset($catalogueSelected)){continue;} // scheel ?>
     <!-- @Scheel - end -->
-    <div class="facet-group" id="side-panel-<?=$this->escapeHtmlAttr($title) ?>">
+    <div class="facet-group facet-group-ex" id="side-panel-<?=$this->escapeHtmlAttr($title) ?>">
       <!-- @Scheel - old code 
       <button class="title<?php if (in_array($title, $collapsedFacets)): ?> collapsed<?php endif ?>" data-toggle="collapse" href="#side-collapse-<?=$this->escapeHtmlAttr($title) ?>" >
       -->        
     <!-- @Scheel - new code -->
-    <button class="title<?php if (in_array($title, $collapsedFacets)): ?> collapsed<?php endif ?><?= ((isset($title) && substr($title, 0,  9) == 'catalogue') && isset($catalogueSelected))?' cat-title':''; // scheel ?>" data-toggle="collapse" href="#side-collapse-<?=$this->escapeHtmlAttr($title) ?>" >
+    <button class="facet-group-title-ex title<?php if (in_array($title, $collapsedFacets)): ?> collapsed<?php endif ?><?= ((isset($title) && substr($title, 0,  9) == 'catalogue') && isset($catalogueSelected))?' cat-title':''; // scheel ?> " data-toggle="collapse" href="#side-collapse-<?=$this->escapeHtmlAttr($title) ?>" >
         <?= ((isset($title) && substr($title, 0,  9) == 'catalogue') && isset($catalogueSelected))?$catalogueSelected:''; // scheel ?>
     <!-- @Scheel - end -->        
         <?=$this->transEsc($cluster['label'])?>

@@ -6,7 +6,7 @@
   $noJsSupport = $this->config()->nonJavascriptSupportEnabled();
 ?>
 <?php if (!empty($facetList)): ?>
-  <div class="search-home-facets">
+  <div class="search-home-facets search-home-facets-ex">
     <?php foreach ($facetList as $field => $details): ?>
       <?php if ($isHierarchy = in_array($field, $hierarchicalFacets ?? [])):
           $this->headScript()->appendFile('vendor/jsTree/jstree.min.js');
@@ -20,9 +20,9 @@ $(document).ready(function() {
 JS;
           echo $this->inlineScript(\Laminas\View\Helper\HeadScript::SCRIPT, $script, 'SET');
         ?>
-        <div id="facet_<?=$this->escapeHtml($field)?>_container" class="home-facet <?=$this->escapeHtmlAttr($field)?> hide">
+        <div id="facet_<?=$this->escapeHtml($field)?>_container" class="home-facet <?=$this->escapeHtmlAttr($field)?> hide home-facet-ex">
           <h2><?=$this->transEsc('home_browse') . ' ' . $this->transEsc($details['label'])?></h2>
-          <div id="facet_<?=$this->escapeHtml($field)?>" class="jstree-facet"
+          <div id="facet_<?=$this->escapeHtml($field)?>" class="jstree-facet home-facet-container home-facet-container-ex"
               data-source="<?=$this->escapeHtml($this->searchClassId)?>"
               data-facet="<?=$this->escapeHtml($field)?>"
               data-path="<?=$this->url($basicSearch)?>"
@@ -40,9 +40,9 @@ JS;
       <?php endif; ?>
       <?php if (!$isHierarchy || $noJsSupport): // do we need regular display? ?>
         <?php $sortedList = $this->sortFacetList($results, $field, $details['list'], $basicSearch); ?>
-        <div class="home-facet <?=$this->escapeHtmlAttr($field) ?> searchHomeContent col-sm-3">
+        <div class="home-facet <?=$this->escapeHtmlAttr($field) ?> home-facet-ex">
           <h2><?=$this->transEsc('home_browse') . ' ' . $this->transEsc($details['label'])?></h2>
-          <div class="home-facet-container">
+          <div class="home-facet-container home-facet-container-ex">
             <ul class="home-facet-list">
               <?php
                 // Special case: two columns for LC call numbers...
