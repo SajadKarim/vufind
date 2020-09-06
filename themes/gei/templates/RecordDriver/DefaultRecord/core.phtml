@@ -7,10 +7,7 @@
     $preview = ($this->previewOverride ?? false)
       ? $this->previewOverride : $this->record($this->driver)->getPreviews();
   ?>
-  <!-- @Scheel - new code -->
-  <div class="group">	 
-  <!-- @Scheel - end -->
-
+  <!--
   <?php if ($QRCode || $cover || $preview): ?>
     <div class="media-left <?=$this->escapeHtmlAttr($coverDetails['size'])?> img-col">
       <?php /* Display thumbnail if appropriate: */ ?>
@@ -36,14 +33,10 @@
       <?php endif; ?>
     </div>
   <?php endif; ?>
+  -->
   <div class="media-body">
 
-    <!-- @Scheel - old code 
-    <h1 property="name"><?=$this->escapeHtml($this->driver->getShortTitle() . ' ' . $this->driver->getSubtitle() . ' ' . $this->driver->getTitleSection())?></h1>
-    -->
-    <!-- @Scheel - new code -->
-    <h1 property="name" class="edu-link edu-separator row"><?=$this->escapeHtml($this->driver->getShortTitle() . ' ' . $this->driver->getSubtitle() . ' ' . $this->driver->getTitleSection())?></h1>
-    <!-- @Scheel - end -->
+    <h1 property="name" class="edu-link edu-seperator-row"><?=$this->escapeHtml($this->driver->getShortTitle() . ' ' . $this->driver->getSubtitle() . ' ' . $this->driver->getTitleSection())?></h1>
 
     <?php if(!empty($this->extraControls)): ?>
       <?=$this->extraControls['actionControls'] ?? ''?>
@@ -72,12 +65,7 @@
       $coreFields = $formatter->getData($driver, $formatter->getDefaults('core'));
     ?>
     <?php if (!empty($coreFields)): ?>
-      <!-- @Scheel - old code 
-        <table class="table table-striped">
-      -->
-      <!-- @Scheel - new code -->
-        <table class="table edu-table table-striped">
-      <!-- @Scheel - end -->
+      <table class="table table-striped">
         <caption class="sr-only"><?=$this->transEsc('Bibliographic Details')?></caption>
         <?php foreach ($coreFields as $current): ?>
           <tr><th><?=$this->transEsc($current['label'])?>:</th><td><?=$current['value']?></td></tr>
@@ -87,4 +75,3 @@
     <?php /* End Main Details */ ?>
   </div>
 </div>
-<!-- @SajadKarim - There is some more code to move from old code but I could not find any equivalent code in newer version... so need to track the chagne from SVN -->

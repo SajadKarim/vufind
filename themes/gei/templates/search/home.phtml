@@ -26,6 +26,37 @@
     <?=$this->inlineScript(\Laminas\View\Helper\HeadScript::SCRIPT, '$("#searchForm_lookfor").focus();', 'SET'); ?>
   <?=$this->slot('search-home')->end() ?>
 </div>
+
+   <?php $this->headScript()->appendFile('vendor/scrollbar/jquery.scrollbar.min.js'); ?>
+ <?php $this->headScript()->appendFile('vendor/scrollbar/jquery.scrollbar.js'); ?>
+ <?php $this->headLink()->appendStylesheet('vendor/jquery.scrollbar.css'); ?>
+
+<?php
+$script = <<<JS
+$(document).ready(function() {
+ $("#front-page-facets-div2 > div > div").scrollbar();
+
+ /*needed for j-tree element:  scroll-content */
+ /*$(".scroll-content").css("padding-left", "15px");*/
+ 
+   /*$("#facet_class_local_iln_l").scrollbar();*/
+  /*
+  $("#facet_class_local_iln_l").slider({
+	  reversed : true,
+	  min  : 0,
+	  max  : 10, 
+	  step : 1,
+	  value: 0, 
+	  orientation: 'vertical', 
+	  tooltip_position:'left'
+  });
+  */
+  
+});
+JS;
+?>
+<?=$this->inlineScript(\Zend\View\Helper\HeadScript::SCRIPT, $script, 'SET'); ?>
+
 </div>
 
 <?=implode('', array_map([$this, 'contentBlock'], $blocks ?? []))?>

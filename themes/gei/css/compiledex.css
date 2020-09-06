@@ -9211,7 +9211,7 @@ border-top-left-radius: 15px;
     padding-left: 20px;
     padding-top: 5px;
     padding-bottom: 5px;
-
+    min-height:200px;
 }
 
 .jstree-facet .jstree-icon {
@@ -9240,4 +9240,12 @@ min-height: 38px;
 border-top-right-radius: 15px;
 border-top-left-radius: 15px;
 }
-
+.sidebar.right {
+    padding-left: 0rem;
+}
+.sidebar .list-group {
+    margin-bottom: 0px;
+}
+.main .sidebar {
+    background-color: transparent;
+}
