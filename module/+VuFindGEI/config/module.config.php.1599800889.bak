@@ -1,7 +1,0 @@
-<?php
-namespace VuFindGEI\Module\Configuration;
-
-$config = [
-];
-
-return $config;
