@@ -7,7 +7,6 @@
     $preview = ($this->previewOverride ?? false)
       ? $this->previewOverride : $this->record($this->driver)->getPreviews();
   ?>
-  <!--
   <?php if ($QRCode || $cover || $preview): ?>
     <div class="media-left <?=$this->escapeHtmlAttr($coverDetails['size'])?> img-col">
       <?php /* Display thumbnail if appropriate: */ ?>
@@ -33,7 +32,6 @@
       <?php endif; ?>
     </div>
   <?php endif; ?>
-  -->
   <div class="media-body">
 
     <h1 property="name" class="edu-link edu-seperator-row"><?=$this->escapeHtml($this->driver->getShortTitle() . ' ' . $this->driver->getSubtitle() . ' ' . $this->driver->getTitleSection())?></h1>

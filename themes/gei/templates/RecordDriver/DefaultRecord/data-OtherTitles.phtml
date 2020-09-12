@@ -1,0 +1,10 @@
+<?php $otherTitles = $data; if (!empty($otherTitles)): ?>
+
+          <ul>
+			<?php foreach ($otherTitles as $ot): ?>
+				<li><a title="<?=$ot ?>" href="<?=$this->record($this->driver)->getLink('filter', ['other_title_str_mv',$ot])?>" rel="nofollow"><?=$ot ?></a></li>
+			<?php endforeach; ?>
+		  </ul>
+
+<?php endif; ?>
+

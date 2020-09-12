@@ -35,8 +35,8 @@ return array (
       array (
         'factories' => 
         array (
-          'VuFindGEI\\RecordDriver\\SolrMarc' => 'VuFind\\RecordDriver\\SolrDefaultFactory',
-          'VuFindGEI\\RecordDriver\\SolrDefault' => 'VuFind\\RecordDriver\\SolrDefaultFactory',
+          'VuFindGEI\\RecordDriver\\SolrMarc' => 'VuFindGEI\\RecordDriver\\SolrDefaultFactory',
+          'VuFindGEI\\RecordDriver\\SolrDefault' => 'VuFindGEI\\RecordDriver\\SolrDefaultFactory',
         ),
         'aliases' => 
         array (

@@ -311,7 +311,9 @@ class DAIA extends AbstractBase implements
      */
     public function getStatuses($ids)
     {
+    	
         $status = [];
+
 
         // check cache for given ids and skip these ids if availability data is found
         foreach ($ids as $key => $id) {
@@ -464,6 +466,7 @@ class DAIA extends AbstractBase implements
             'format' => $this->daiaResponseFormat,
         ];
 
+	error_log('base url: '. $this->baseUrl);
         try {
             $result = $this->httpService->get(
                 $this->baseUrl,
@@ -513,6 +516,7 @@ class DAIA extends AbstractBase implements
             }
         }
 
+        error_log('ok12 :'. $result->getBody());
         return $result->getBody();
     }
 

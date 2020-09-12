@@ -1,6 +1,7 @@
 <!-- @Scheel - new code -->
 <div class="">
 <!-- @Scheel - end -->
+<?php echo 'class::::'.get_class($this); ?>
 <?php $similarRecords = $this->related->getResults(); ?>
 <!-- @Scheel - new code -->
 <div class="list-group filters">
@@ -13,8 +14,7 @@
         <?php $formats = $data->getFormats(); ?>
         <i class="fa fa-x<?php if (count($formats) > 0): ?> fa-<?=preg_replace('/[^a-z0-9]/', '', strtolower($formats[0]))?>" title="<?=$formats[0] ?><?php endif; ?>"></i>
         <a href="<?=$this->recordLink()->getUrl($data)?>">
-          <?=$this->escapeHtml($data->getTitle())?>
-        </a>
+          <?=$this->escapeHtml($this->driver->getShortTitle() . ' ' . $this->driver->getSubtitle() . ' ' . $this->driver->getTitleSection())?>        </a>
 
 <!-- @Scheel - new code -->
 <?php $author = $data->getPrimaryAuthor(); if (!empty($author)): ?>

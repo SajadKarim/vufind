@@ -3,7 +3,7 @@
 <?=$this->url($searchRoute)?>?lookfor=%22<?=urlencode($this->lookfor)?>%22&amp;type=Series
 -->
 <!-- @Scheel - new code -->
-<?
+<?php
 	$uri = $_SERVER['REQUEST_URI'];
 	$uri2 = $this->url('search-results');
 	if (strrpos($uri, $uri2) === false) {

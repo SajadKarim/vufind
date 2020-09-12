@@ -14,16 +14,16 @@
 <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getUniqueID())?>" class="hiddenId" />
 <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getSourceIdentifier())?>" class="hiddenSource" />
 <div class="media">
-<!--
+
   <?php if ($thumbnail && $thumbnailAlignment == 'left'): ?>
     <?=$thumbnail ?>
   <?php endif ?>
-  -->
+  
   <div class="media-body">
     <div class="result-body">
       <div>
         <a href="<?=$this->recordLink()->getUrl($this->driver)?>" class="edu-link" data-view="<?=$this->params->getOptions()->getListViewOption() ?>">
-          <?=$this->record($this->driver)->getTitleHtml()?>
+          <?=$this->escapeHtml($this->driver->getShortTitle() . ' ' . $this->driver->getSubtitle() . ' ' . $this->driver->getTitleSection())?>
         </a>
       </div>
 
@@ -38,19 +38,65 @@
             <?php endforeach; ?>
           <?php endif; ?>
 
+
+
           <?php $journalTitle = $this->driver->getContainerTitle(); $summDate = $this->driver->getPublicationDates(); ?>
           <?php if (!empty($journalTitle)): ?>
             <?=!empty($summAuthor) ? '<br />' : ''?>
             <?=$this->transEsc('Published in')?>
             <?php $containerSource = $this->driver->getSourceIdentifier(); ?>
             <?php $containerID = $this->driver->getContainerRecordID(); ?>
+            
+
+
+            
             <?php /* TODO: handle highlighting more elegantly here: */?>
             <a href="<?=($containerID ? $this->recordLink()->getUrl("$containerSource|$containerID") : $this->record($this->driver)->getLink('journaltitle', str_replace(['{{{{START_HILITE}}}}', '{{{{END_HILITE}}}}'], '', $journalTitle)))?>"><?=$this->highlight($journalTitle) ?></a>
             <?=!empty($summDate) ? ' (' . $this->escapeHtml($summDate[0]) . ')' : ''?>
           <?php elseif (!empty($summDate)): ?>
             <?=!empty($summAuthor) ? '<br />' : ''?>
-            <?=$this->transEsc('Published') . ' ' . $this->escapeHtml($summDate[0])?>
+
+<!--   
+   		<strong class="hideIfDetailed"><?=$this->transEsc('Published')?>:</strong>
+		<span>
+		             <?php $summInCollection = $this->driver->getPublicationDetails(); if (!empty($summInCollection)): ?>
+            <?php foreach ($summInCollection as $collId => $collText): ?>
+                <a class="collectionLinkText" href="<?=$this->record($this->driver)->getLink('collection', $collId)?>">
+                  <?=$this->escapeHtml($collText)?>
+                </a>
+              
+            <?php endforeach; ?>
           <?php endif; ?>
+</span>
+
+            <?=', ' . $this->escapeHtml($summDate[0])?>
+-->
+
+<?php $publications = $this->driver->getPublicationDetails(); if (!empty($publications)): ?>
+<div>
+<strong><?=$this->transEsc('Published')?></strong>
+<span>
+  <?php foreach ($publications as $field): ?>
+	<span property="publisher" typeof="Organization">
+	<?php $pubPlace = $field->getPlace(); $pubName = $field->getName(); $pubDate = $field->getDate(); ?>
+	<?php if (!empty($pubPlace)): ?>
+		 <a property="location" href="<?=$this->record($this->driver)->getLink('pubPlace', $pubName)?>"><?=$this->escapeHtml($pubPlace)?></a><span><?=(!empty($pubName))?':':((!empty($pubDate))?',':'')?></span>
+	<?php endif; ?>
+	<?php if (!empty($pubName)): ?>
+<a property="name" href="<?=$this->record($this->driver)->getLink('pubName', $pubName)?>"><?=$this->escapeHtml($pubName)?></a><span><?=(!empty($pubDate))?',':''?></span>
+	<?php endif; ?>
+	</span>
+	<?php if (!empty($pubDate)): ?>
+		<span property="publicationDate"><?=$this->escapeHtml($pubDate)?></span>
+	<?php endif; ?>
+	<?php break;/*scheel: show only one*/ ?>
+  <?php endforeach; ?>
+</span>
+</div>
+<?php endif; ?>
+
+          <?php endif; ?>
+          
           <?php $summInCollection = $this->driver->getContainingCollections(); if (!empty($summInCollection)): ?>
             <?php foreach ($summInCollection as $collId => $collText): ?>
               <div>
@@ -99,6 +145,44 @@
         </div>
       <?php endif; ?>
 
+	<!-- TODO: Sajad Karim.. move call to AJAX .. -->
+  <?php $edition = $this->driver->getEdition(); if (!empty($edition)): ?>
+  <div>
+	<strong class="hideIfDetailed"><?=$this->transEsc('Edition')?>:</strong>
+	<span><?=$this->escapeHtml($edition)?></span>
+	  </div>
+  <?php endif; ?>
+
+			  <?php /* Display series section if at least one series exists. */?>
+			  <?php $series = $this->driver->getSeries(); if (!empty($series)): ?>
+			    <div>
+				<strong class="hideIfDetailed"><?=$this->transEsc('Series')?></strong>
+				<span>
+				  <?php foreach ($series as $field): ?>
+					<?php /*scheel: if not first entry: indent*/?>
+					<?php if ($series[0]!=$field): ?>
+						<span>&nbsp;</span>
+					<?php endif; ?>
+					
+					<?php /* Depending on the record driver, $field may either be an array with
+					   "name" and "number" keys or a flat string containing only the series
+					   name.  We should account for both cases to maximize compatibility. */?>
+					<?php if (is_array($field)): ?>
+					  <?php if (!empty($field['name'])): ?>
+						<a href="<?=$this->record($this->driver)->getLink('series', $field['name'])?>"><?=$this->escapeHtml($field['name'])?></a>
+						<?php if (!empty($field['number'])): ?>
+						  <?=$this->escapeHtml($field['number'])?>
+						<?php endif; ?>
+						<br/>
+					  <?php endif; ?>
+					<?php else: ?>
+					  <a href="<?=$this->record($this->driver)->getLink('series', $field)?>"><?=$this->escapeHtml($field)?></a><br/>
+					<?php endif; ?>
+				  <?php endforeach; ?>
+				</span>
+				  </div>
+			  <?php endif; ?>
+
       <div class="callnumAndLocation ajax-availability hidden">
         <?php if ($this->driver->supportsAjaxStatus()): ?>
           <strong class="hideIfDetailed"><?=$this->transEsc('Call Number')?>:</strong>
@@ -143,8 +227,28 @@
         <?php endif; ?>
       <?php endif; ?>
 
+<?php $id = $this->driver->getUniqueID() ?>
+<?php $orgid = $this->driver->getOriginalID() ?>
+<?php $catlink = $this->driver->getCatalogueLink() ?>
+
       <div class="result-formats">
         <?=$this->record($this->driver)->getFormatList() ?>
+
+		<?php $cat = $this->driver->getCatalogue()?>
+		<!-- scheel : quickfix (will be done in middleware)-->
+		<?php if ($cat === 'EDISCO'):?>
+			<?php $catlink = 'http://www.database-edisco.org:8081/cgi-bin/koha/opac-detail.pl?biblionumber='.$this->escapeHtmlAttr($orgid)?>
+		<?php endif;?>
+		<?php if ($cat === 'MANES'):?>
+			<?php $catlink = 'http://www.centromanes.org:8080/cgi-bin/koha/opac-detail.pl?biblionumber='.$this->escapeHtmlAttr($orgid)?>
+		<?php endif;?>
+		<?php if ($cat === 'GEI'):?>
+			<?php $catlink = 'https://opac.lbs-braunschweig.gbv.de/DB=6.3/XMLPRS=N/PPN?PPN='.$this->escapeHtmlAttr($orgid)?>
+		<?php endif;?>
+		<?php if ($cat === 'BNM'):?>
+			<?php $catlink = 'http://www.bnm.me.gov.ar/catalogo/Record/'.$this->escapeHtmlAttr($orgid)?>
+		<?php endif;?>
+		<a class='label label-cat' href='<?=$catlink?>'><?=$cat?></a>
 
         <?php if (!$openUrlActive && empty($urls) && $this->driver->supportsAjaxStatus()): ?>
           <span class="status ajax-availability hidden">
@@ -153,6 +257,81 @@
         <?php endif; ?>
       </div>
 
+ <?php $localclassification = $this->driver->getLocalClassification();
+	$notes = $this->driver->getNotes();
+ if (!empty($localclassification) || !empty($notes)): ?>
+ <div >
+ 
+   <?php $moreClass = 'narrowGroupHidden-'.$this->escapeHtmlAttr($id).' hidden'; ?>
+  <a class="" id="more-narrowGroupHidden-<?=$this->escapeHtmlAttr($id)?>" href="#" onclick="moreFacets('narrowGroupHidden-<?=$id ?>'); return false;" title="<?=$this->transEsc('more')?> ...">
+	<i class="fa-fw arrow-down"></i>
+  </a>
+<div class="<?=$moreClass ?> res-more">
+
+
+	  <hr />
+	  <?php $langs = $this->driver->getLanguages(); if (!empty($langs)): ?>
+          <div class="res-left"><?=$this->transEsc('Language')?></div>
+		  <div class="res-right">
+				  <?php $langCount = count($langs); foreach ($langs as $i => $lang): ?>
+					<?= $this->escapeHtml($this->transEsc($lang))?><?=$i + 1 < $langCount ? ',' : ''?>
+				  <?php endforeach; ?>
+		  </div>
+      <?php endif; ?>
+	  <?php if (!empty($localclassification)): ?>
+	  
+        <!--div class="res-left" ><?=$this->transEsc('textbook_classification')?></div-->
+		<strong><?=$this->transEsc('textbook_classification')?></strong>
+        <div class="">
+		  <?php foreach ($localclassification as $subfield => $field): ?>
+		  <div class="subjectLine" property="keywords">
+		    <?=trim($this->escapeHtml($this->transEsc($subfield)))?>:
+			<?php if(is_array($field) && count($field) == 1) $field = $field[0]; ?>
+			<?php foreach ($field as $f): ?>
+			  <?php if (count($field) > 1): ?></br>&nbsp&nbsp&nbsp<?php endif; ?>
+			  <?php 
+			    /*scheel*/
+				$subject = $f;
+				if(substr( $subject, -1 ) == '/'){ //ends with slash (-> is hierarchical -> reduce to the last part)
+					$subject = substr($subject, 0, strlen($subject)-1);	
+					if(strripos( $subject, '/' ) > -1){
+						$subject = substr($subject, strripos( $subject, '/' )+1);
+					}
+				}
+			  ?>
+			  <a title="<?=trim($this->escapeHtml($this->transEsc($subject)))?>" href="<?=$this->record($this->driver)->getLink('filter', [$subfield,$f])?>" rel="nofollow"><?=trim($this->escapeHtml($this->transEsc($subject)))?></a>
+			<?php endforeach; ?>
+		  </div>
+          <?php endforeach; ?>
+        </div>
+      <?php endif; ?>
+	  
+	  
+	  <?php if (!empty($notes)): ?>
+	    <strong><?=$this->transEsc('observations')?></strong>
+		 <div class="">
+			<ul>
+				<?php foreach ($notes as $note): ?>
+					<li><?=$note ?></li>
+				<?php endforeach; ?>
+			</ul>
+		  </div>
+	  <?php endif; ?>
+	  
+	  <?php /* Saved lists */ ?>
+	  <div class="">
+		  <div class="savedLists alert alert-info hidden">
+			<strong><?=$this->transEsc("Saved in")?>:</strong>
+		  </div>
+	  </div>
+	  
+	  <a class="" href="#" onclick="lessFacets('narrowGroupHidden-<?=$id ?>'); return false;" title="<?=$this->transEsc('less')?> ...">
+		<i class="fa-fw arrow-up"></i>
+	  </a>
+	</div> 
+  </div>
+  <?php endif; ?>	
+	
       <div class="result-previews">
         <?=$this->record($this->driver)->getPreviews()?>
       </div>

@@ -236,11 +236,21 @@ class RecordDataFormatterFactory implements FactoryInterface
         $spec->setTemplateLine(
             'Published', 'getPublicationDetails', 'data-publicationDetails.phtml'
         );
+                
         $spec->setLine(
             'Edition', 'getEdition', null,
             ['itemPrefix' => '<span property="bookEdition">',
              'itemSuffix' => '</span>']
         );
+
+        $spec->setTemplateLine( 'Textbook Catalogue', 'getCatalogueEx', 'data-Catalogue.phtml');
+
+        $spec->setTemplateLine( 'Textbook Classification', 'getLocalClassification', 'data-TextbookClassification.phtml');
+
+        $spec->setTemplateLine( 'Other Titles', 'getOtherTitles', 'data-OtherTitles.phtml');
+
+        //$spec->setTemplateLine( 'Subjects', 'getAllSubjectHeadings', 'data-Subjects.phtml');
+
         $spec->setTemplateLine('Series', 'getSeries', 'data-series.phtml');
         $spec->setTemplateLine(
             'Subjects', 'getAllSubjectHeadings', 'data-allSubjectHeadings.phtml'

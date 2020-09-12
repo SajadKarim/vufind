@@ -24,6 +24,7 @@ return array(
         'vendor/validator.min.js',
         //'vendor/rc4.js',
         'common.js',
+        'commonex.js',
         'lightbox.js',
 	'vendor/bootstrap-slider.js',
 	'vendor/bootstrap-tour-standalone.js',

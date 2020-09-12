@@ -1,0 +1,18 @@
+<?php $catlink = $data["CatalogueLink"] ?>
+
+<?php if (isset($catlink) && !empty($catlink)): ?>
+<span property="location"><?=$this->escapeHtml($data["CatalogueID"])?>:&nbsp;</span>
+<a class='catLink' href='<?=$catlink?>'><?=$this->transEsc('Library Catalog Search Result')?></a>
+  <script>
+	$('.catLink').click(function () {
+		if(this.href.endsWith('#')){
+			$('#externalSearchForm').submit();
+		}else{
+			var win = window.open(this.href, '_blank');
+			win.focus();
+		}
+		return false;
+	});
+</script>
+<?php endif; ?><?php/*"Library Catalog Search Result"*/?>
+

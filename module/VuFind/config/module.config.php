@@ -488,6 +488,7 @@ $config = [
             'VuFind\RecommendPluginManager' => 'VuFind\Recommend\PluginManager',
             'VuFind\RecordCache' => 'VuFind\Record\Cache',
             'VuFind\RecordDriverPluginManager' => 'VuFind\RecordDriver\PluginManager',
+            'VuFind\RecordDriverSolrDefault' => 'VuFind\RecordDriver\SolrDefault',
             'VuFind\RecordLoader' => 'VuFind\Record\Loader',
             'VuFind\RecordRouter' => 'VuFind\Record\Router',
             'VuFind\RecordTabPluginManager' => 'VuFind\RecordTab\PluginManager',

@@ -9249,3 +9249,31 @@ border-top-left-radius: 15px;
 .main .sidebar {
     background-color: transparent;
 }
+
+.facet-value
+{
+line-height: 2.2rem;
+}
+
+.sidebar .list-group-item {
+    padding: 7px 1px 6px 20px;
+}
+
+
+.result-formats {
+    margin-top: 2rem;
+}
+
+.result-body div {
+    /*margin-top: 2rem;*/
+    padding-bottom: 5px;
+}
+
+.callnumAndLocation span
+{
+    padding-bottom: 5px;
+}
+
+.result:nth-child(2n) {
+    background-color: #fff;
+}
