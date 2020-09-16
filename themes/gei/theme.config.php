@@ -23,6 +23,7 @@ return array(
         //'vendor/typeahead.js',
         'vendor/validator.min.js',
         //'vendor/rc4.js',
+        'check_item_statuses.js',
         'common.js',
         'commonex.js',
         'lightbox.js',

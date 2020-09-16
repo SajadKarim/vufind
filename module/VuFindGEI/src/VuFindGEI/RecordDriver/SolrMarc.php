@@ -139,7 +139,6 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
      */
     public function getCallNumber()
     {
-    	return "sajad";
         $all = $this->getCallNumbers();
         return isset($all[0]) ? $all[0] : '';
     }
@@ -185,7 +184,41 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
 		return isset($this->fields['language_code_str_mv']) ? $this->fields['language_code_str_mv'] : [];//scheel
     }
 
+    /**
+     * Return the unique identifier of this record within the Solr index;
+     * useful for retrieving additional information (like tags and user
+     * comments) from the external MySQL database.
+     *
+     * @return string Unique identifier.
+     */
+    /*public function getUniqueID()
+    {
+	if (!isset($this->fields['id'])) {
+            throw new \Exception('ID not set!');
+        }
+        //echo "sajad karim" . str_replace("gei" , "", $this->fields['id']);
+        
+        return str_replace("gei" , "", $this->fields['id']);
+    }*/
+    
+        /**
+     * Get a link for placing a title level hold.
+     *
+     * @return mixed A url if a hold is possible, boolean false if not
+     */
+    public function getRealTimeTitleHold()
+    {
+        if ($this->hasILS()) {
+            $biblioLevel = strtolower($this->tryMethod('getBibliographicLevel'));
+            if ("monograph" == $biblioLevel || strstr($biblioLevel, "part")) {
+                if ($this->ils->getTitleHoldsMode() != "disabled") {
+                    return $this->titleHoldLogic->getHold($this->getUniqueID());
+                }
+            }
+        }
 
+        return false;
+    }
 
 }
 

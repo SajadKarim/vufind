@@ -51,6 +51,17 @@ return array (
           ),
         ),
       ),
+      'ils_driver' => 
+      array (
+        'factories' => 
+        array (
+          'VuFindGEI\\ILS\\Driver\\DAIA' => 'VuFind\\ILS\\Driver\\DriverWithDateConverterFactory',
+        ),
+        'aliases' => 
+        array (
+          'VuFind\\ILS\\Driver\\DAIA' => 'VuFindGEI\\ILS\\Driver\\DAIA',
+        ),
+      ),
     ),
   ),
 );
