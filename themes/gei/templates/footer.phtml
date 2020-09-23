@@ -54,7 +54,7 @@
   <!-- @Scheel - new code -->
   <script type="text/javascript" id="initTourSearchPage">
     /*<![CDATA[*/
-    initTourResultPage("take-tour1");
+//    initTourResultPage("take-tour1");
     /*]]>*/
   </script>
   <!-- @Scheel - end -->
@@ -63,3 +63,6 @@
   </div>
 </footer>
 </div>
+<?php if($this->config()->demoEnabled()): ?>
+<?=$this->render('tour/tour.phtml')?>
+<?php endif; ?>

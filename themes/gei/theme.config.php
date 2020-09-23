@@ -27,8 +27,8 @@ return array(
         'common.js',
         'commonex.js',
         'lightbox.js',
-	'vendor/bootstrap-slider.js',
+	//'vendor/bootstrap-slider.js',
 	'vendor/bootstrap-tour-standalone.js',
-	'tour-1.js',
+	//'tour-1.js',
     )
 );

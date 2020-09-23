@@ -221,6 +221,11 @@ JS;
 				  <nav class="edu-nav edu-h-nav edu-module-header-nav">
 					<ul class="edu-nav__list">
 					
+<?php if($this->config()->demoEnabled()): ?>
+					<li class="edu-nav__item" id="btnDemoLaunch"><span href="" class="edu-nav__item__a"><?=$this->transEsc('Demo')?></span></li>
+<?php endif; ?>
+					
+					
 					  <li class="edu-nav__item <?php if($this->layout()->edunav==null):?>edu-nav-item--active<?php else: ?><?=$this->layout()->edunav[0] ?><?php endif; ?>"><a href="<?=$this->url('home')?>" class="edu-nav__item__a"><?=$this->transEsc('Research')?></a></li>
 					  <!--li class="edu-nav__item <?=$this->layout()->edunav[1] ?>"><a href="<?=$this->url('search-advanced')?>" class="edu-nav__item__a"><?=$this->transEsc('Advanced Search')?></a></li-->
 					  <?php $account = $this->auth()->getManager(); ?>
