@@ -1,0 +1,47 @@
+<? $this->headTitle($this->translate('Imprint')); ?>
+<div class="imprint">
+	<h1 class="">Georg-Eckert-Institut<br />
+	Leibniz-Institut für internationale Schulbuchforschung</h1>
+	<p class="bodytext">
+	Celler Straße 3<br />
+	D-38114 Braunschweig 
+	</p>
+	<p class="bodytext">Tel.:&nbsp;+49 (0) 531 590 99 100<br />
+	Fax:&nbsp;+49 (0) 531 590 99 199<br />
+	E-Mail: <a href="mailto:info@gei.de;" title="Öffnet ein Fenster zum Versenden einer E-Mail" class="mail">senden</a></p>
+	<p class="bodytext">Das Georg-Eckert-Institut ist eine Anstalt des öffentlichen Rechts.<br />
+	Sitz des Institutes: Braunschweig </p>
+	
+	<div class="divider"><hr></div>
+
+	<h2><strong>Urheberrechtshinweise</strong>&nbsp;</h2>
+
+	<p class="bodytext">Alle auf dieser Website veröffentlichten Beiträge und Abbildungen sind urheberrechtlich geschützt. Jede vom Urheberrechtsgesetz nicht zugelassene Verwertung bedarf vorheriger schriftlicher Zustimmung des Anbieters. Dies gilt insbesondere für Vervielfältigung, Bearbeitung, Übersetzung, Einspeicherung, Verarbeitung bzw. Wiedergabe von Inhalten in Datenbanken oder anderen elektronischen Medien und Systemen. Fotokopien und Downloads von Web-Seiten dürfen nur für den persönlichen, privaten und nicht kommerziellen Gebrauch hergestellt werden. </p>
+	
+	<div class="divider"><hr></div>
+
+	<h2><strong>Haftung</strong>&nbsp;</h2>
+	<h3>Externe Links </h3>
+	<p class="bodytext">Die Inhalte externer Links werden von uns nicht geprüft. Sie unterliegen der Haftung der jeweiligen Anbieter.
+	</p>
+	<h3>Informationen auf dieser Website</h3>
+	<p class="bodytext">Die Inhalte dieser Website werden mit größtmöglicher Sorgfalt recherchiert. Gleichwohl übernimmt der Anbieter keine Haftung für die Richtigkeit, Vollständigkeit und Aktualität der bereit gestellten Informationen. </p>
+	<div class="divider"><hr></div>
+
+	<h2><strong>Datenschutzerklärung</strong>&nbsp;</h2>
+	<p class="bodytext">Diese Website benutzt <a href="http://vufind.org/" title="Opens external link in new window" target="_blank" class="external-link-new-window">Vufind</a>, eine Open-Source-Software die auch statistische Auswertung der Besucherzugriffe macht. Vufind verwendet dabei &quot;Cookies&quot;, d.h. Textdateien, die auf Ihrem Computer gespeichert werden und die eine Analyse der Benutzung der Website durch Sie ermöglichen. Die erzeugten Informationen über Ihre Benutzung dieses Internetangebotes werden auf einem Server des GEI in Deutschland gespeichert und nicht an Dritte weitergegeben. Die IP-Adresse wird sofort nach der Verarbeitung und vor deren Speicherung anonymisiert. </p>
+
+	<h2><strong>Datenschutzbeauftragter</strong>&nbsp;</h2>
+	<p class="bodytext">Datenschutzbeauftragter ist Herr Prof. a.D. Dr. Michael Wettern. Sie erreichen ihn per E-Mail über <a href="mailro:datenschutzbeauftragter@gei.de" title="Öffnet ein Fenster zum Versenden der E-Mail" class="mail">datenschutzbeauftragter@<span style="display:none;">remove-this.</span>gei.de</a>. </p>
+	
+	<div class="divider"><hr></div>
+
+
+</div>
+
+ <?$this->headScript()->appendScript(
+            'var e = document.getElementById("modalTitle");' .
+			'if(e){ e.innerHTML = "' .$this->translate('Imprint') .'";}'
+);?>
+
+<?=$this->headScript()?>

@@ -67,15 +67,15 @@
                 onShow: function (tour) {},
                 path: "/gei/Search/Results?lookfor=Berlin&type=AllFields&limit=20",
                 onShown: function (tour) {
-         	       scrollTourWndIntoView(tour);
-                }
+                    scrollTourWndIntoView(tour);
+                },
             },
             {
                 element: ".sidebar",
                 title: "<?=$this->transEsc('basic_tour_step4_title')?>",
                 content: "<?=$this->transEsc('basic_tour_step4_content')?>",
                 placement: "auto right",
-                backdrop: true
+                backdrop: true,
             },
             {
                 element: "#side-panel-textbook_catalogue_hierarchical_str_mv",
@@ -84,8 +84,8 @@
                 placement: "auto right",
                 backdrop: true,
                 onShown: function (tour) {
-         	       scrollTourWndIntoView(tour);
-                }
+                    scrollTourWndIntoView(tour);
+                },
             },
             {
                 element: "#side-panel-country_of_use_hierarchical_str_mv",
@@ -94,8 +94,8 @@
                 placement: "auto right",
                 backdrop: true,
                 onShown: function (tour) {
-         	       scrollTourWndIntoView(tour);
-                }
+                    scrollTourWndIntoView(tour);
+                },
             },
             {
                 element: "#side-panel-language",
@@ -104,8 +104,8 @@
                 placement: "auto right",
                 backdrop: true,
                 onShown: function (tour) {
-         	       scrollTourWndIntoView(tour);
-                }
+                    scrollTourWndIntoView(tour);
+                },
             },
             {
                 element: "#side-panel-school_subject_isced_hierarchical_str_mv",
@@ -114,8 +114,8 @@
                 placement: "auto right",
                 backdrop: true,
                 onShown: function (tour) {
-         	       scrollTourWndIntoView(tour);
-                }
+                    scrollTourWndIntoView(tour);
+                },
             },
             {
                 element: "#side-panel-level_of_education_str_mv",
@@ -141,7 +141,7 @@
                 title: "<?=$this->transEsc('basic_tour_step11_title')?>",
                 content: "<?=$this->transEsc('basic_tour_step11_content')?>",
                 placement: "auto left",
-                backdrop: true
+                backdrop: true,
             },
             {
                 element: "#result1 .edu-link",
@@ -150,9 +150,9 @@
                 placement: "auto bottom",
                 path: "/gei/Search/Results?lookfor=Berlin&type=AllFields&limit=20",
                 onShown: function (tour) {
-         	       scrollTourWndIntoView(tour);
+                    scrollTourWndIntoView(tour);
                 },
-                backdrop: true
+                backdrop: true,
             },
             {
                 element: ".mainbody",
@@ -161,7 +161,7 @@
                 placement: "auto right",
                 path: "/gei/Record/gei564188840",
                 onShown: disablePrev,
-                backdrop: true
+                backdrop: true,
             },
             {
                 element: ".record-tabs",
@@ -170,8 +170,8 @@
                 placement: "auto top",
                 path: "/gei/Record/gei564188840",
                 onShown: function (tour) {
-         	       scrollTourWndIntoView(tour);
-                }
+                    scrollTourWndIntoView(tour);
+                },
             },
             {
                 element: ".list-group",
@@ -179,8 +179,8 @@
                 content: "<?=$this->transEsc('basic_tour_step16_content')?>",
                 placement: "auto top",
                 onShown: function (tour) {
-         	       scrollTourWndIntoView(tour);
-                }
+                    scrollTourWndIntoView(tour);
+                },
             },
             /*{
                 element: ".record-tabpanel .tab3",
@@ -307,28 +307,31 @@
             },
         ];
     }
-    
-    function scrollTourWndIntoView(tour) {
-    var parent = $('html, body');
-    var offset = 10;
-              var elementOffset = $(tour._options.steps[tour.getCurrentStep()].element).position();
-              var popoverOffset = $(".tour-"+tour._options.name).position();
 
-		if (elementOffset.top < popoverOffset.top) {
-		parent.scrollTop( elementOffset.top - offset);
-		parent.scrollLeft( elementOffset.left);
-		} else {
-		parent.scrollTop( popoverOffset.top - offset);
-		parent.scrollLeft( popoverOffset.left);
-		}
-return;
-              offset = $(".tour-"+tour._options.name).offset();
-		$('html, body').animate({
-		    scrollTop: offset.top,
-		    scrollLeft: offset.left
-		}, 1);
+    function scrollTourWndIntoView(tour) {
+        var parent = $("html, body");
+        var offset = 10;
+        var elementOffset = $(tour._options.steps[tour.getCurrentStep()].element).position();
+        var popoverOffset = $(".tour-" + tour._options.name).position();
+
+        if (elementOffset.top < popoverOffset.top) {
+            parent.scrollTop(elementOffset.top - offset);
+            parent.scrollLeft(elementOffset.left);
+        } else {
+            parent.scrollTop(popoverOffset.top - offset);
+            parent.scrollLeft(popoverOffset.left);
+        }
+        return;
+        offset = $(".tour-" + tour._options.name).offset();
+        $("html, body").animate(
+            {
+                scrollTop: offset.top,
+                scrollLeft: offset.left,
+            },
+            1
+        );
     }
-    
+
     function disablePrev(tour) {
         $(".tour-" + tour.getName() + "-" + tour.getCurrentStep() + " .btn[data-role=prev]")
             .attr("disabled", "disabled")
