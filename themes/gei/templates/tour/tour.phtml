@@ -1,64 +1,376 @@
 <?php
-
-//$this->headLink()->appendStylesheet('bootstrap-tour-standalone.min.css');
-//$this->headScript()->appendFile("bootstrap-tour-standalone.min.js");
-
-?>
+   //$this->headLink()->appendStylesheet('bootstrap-tour-standalone.min.css'); //$this->headScript()->appendFile("bootstrap-tour-standalone.min.js"); ?>
 <script type="text/javascript">
-// Instance the tour
-var tour = new Tour({
-  steps: [
-  {
-    element: "#searchForm_lookfor",
-    title: "<?=$this->transEsc('tour_step1_title')?>",
-    content: "<?=$this->transEsc('tour_step1_content')?>",
-    placement: 'top',
-    path: "/gei/"
-  },
-  {
-    element: "#searchForm_type",
-    title: "<?=$this->transEsc('tour_step2_title')?>",
-    content: "<?=$this->transEsc('tour_step2_content')?>",
-    placement: 'top',
-    path: "/gei/"
-  },
-  {
-    element: "#searchForm_searchBtn",
-    title: "<?=$this->transEsc('tour_step3_title')?>",
-    content: "<?=$this->transEsc('tour_step3_content')?>",
-    placement: 'top',
-    path: "/gei/"
-  },
-  {
-    element: "#facet_textbook_catalogue_hierarchical_str_mv_container",
-    title: "<?=$this->transEsc('tour_step4_title')?>",
-    content: "<?=$this->transEsc('tour_step4_content')?>",
-    placement: 'top',
-    path: "/gei/"
-  },
-  {
-    element: "#sort_options_1",
-    title: "<?=$this->transEsc('tour_step5_title')?>",
-    content: "<?=$this->transEsc('tour_step5_content')?>",
-    //placement: 'top'
-    path: '/gei/Search/Results?lookfor=&type=AllFields&limit=20'
-  }]
-    ,storage: window.localStorage
+    var BASIC_TOUR_NAME = "_BASIC_TOUR_";
+    var FACTS_TOUR_NAME = "_FACTS_TOUR_";
 
-  });
-	  
-function start_demo(){
-	//window.localStorage.clear();
-	//tour.setCurrentStep(1);
+    function initTour(tourId) {
+        var oSteps;
 
-  // Start the tour
-  tour.restart();
-}
+        switch (tourId) {
+            case BASIC_TOUR_NAME:
+                oSteps = createStepsForBasicTour();
+                break;
+            case FACTS_TOUR_NAME:
+                oSteps = createStepForTourRegardingFacts();
+                break;
+            default:
+                return;
+        }
 
-$(document).ready(function() {
-  // Initialize the tour
-  tour.init();
+        var oTourParams = {
+            name: "itbc-" + tourId,
+            redirect: true,
+            debug: true,
+            orphan: true,
+            autoscroll: false,
+            steps: oSteps,
+            storage: window.localStorage,
+        };
 
-	$("#btnDemoLaunch").bind("click", start_demo);
-})
+        var oTour = new Tour(oTourParams);
+
+        oTour.init();
+
+        return oTour;
+    }
+
+    function createStepsForBasicTour() {
+        return [
+            {
+                element: "#searchForm_lookfor",
+                title: "<?=$this->transEsc('basic_tour_step1_title')?>",
+                content: "<?=$this->transEsc('basic_tour_step1_content')?>" + "<a href='Help/Home?topic=search&_=1555329212' data-lightbox class='help-link'>Help page</a>.",
+                placement: "auto top",
+                path: "/gei/",
+            },
+            {
+                element: "#searchForm button.btn",
+                title: "<?=$this->transEsc('basic_tour_step2_title')?>",
+                content: "<?=$this->transEsc('basic_tour_step2_content')?>",
+                placement: "auto bottom",
+                onShow: function (tour) {
+                    var searchInput = $("#searchForm input.search-query");
+                    if (searchInput.val() === "") {
+                        typeValue(searchInput, "Berlin");
+                    }
+                },
+                path: "/gei/",
+            },
+            {
+                element: "#result1",
+                title: "<?=$this->transEsc('basic_tour_step3_title')?>",
+                content: "<?=$this->transEsc('basic_tour_step3_content')?>",
+                placement: "auto top",
+                orphan: true,
+                backdrop: true,
+                onShow: function (tour) {},
+                path: "/gei/Search/Results?lookfor=Berlin&type=AllFields&limit=20",
+                onShown: function (tour) {
+         	       scrollTourWndIntoView(tour);
+                }
+            },
+            {
+                element: ".sidebar",
+                title: "<?=$this->transEsc('basic_tour_step4_title')?>",
+                content: "<?=$this->transEsc('basic_tour_step4_content')?>",
+                placement: "auto right",
+                backdrop: true
+            },
+            {
+                element: "#side-panel-textbook_catalogue_hierarchical_str_mv",
+                title: "<?=$this->transEsc('basic_tour_step5_title')?>",
+                content: "<?=$this->transEsc('basic_tour_step5_content')?>",
+                placement: "auto right",
+                backdrop: true,
+                onShown: function (tour) {
+         	       scrollTourWndIntoView(tour);
+                }
+            },
+            {
+                element: "#side-panel-country_of_use_hierarchical_str_mv",
+                title: "<?=$this->transEsc('basic_tour_step6_title')?>",
+                content: "<?=$this->transEsc('basic_tour_step6_content')?>",
+                placement: "auto right",
+                backdrop: true,
+                onShown: function (tour) {
+         	       scrollTourWndIntoView(tour);
+                }
+            },
+            {
+                element: "#side-panel-language",
+                title: "<?=$this->transEsc('basic_tour_step7_title')?>",
+                content: "<?=$this->transEsc('basic_tour_step7_content')?>",
+                placement: "auto right",
+                backdrop: true,
+                onShown: function (tour) {
+         	       scrollTourWndIntoView(tour);
+                }
+            },
+            {
+                element: "#side-panel-school_subject_isced_hierarchical_str_mv",
+                title: "<?=$this->transEsc('basic_tour_step8_title')?>",
+                content: "<?=$this->transEsc('basic_tour_step8_content')?>",
+                placement: "auto right",
+                backdrop: true,
+                onShown: function (tour) {
+         	       scrollTourWndIntoView(tour);
+                }
+            },
+            {
+                element: "#side-panel-level_of_education_str_mv",
+                title: "<?=$this->transEsc('basic_tour_step9_title')?>",
+                content: "<?=$this->transEsc('basic_tour_step9_content')?>",
+                placement: "auto right",
+                backdrop: true,
+            },
+            {
+                element: ".sidebar:first",
+                title: "<?=$this->transEsc('basic_tour_step10_title')?>",
+                content: "<?=$this->transEsc('basic_tour_step10_content')?>",
+                placement: "auto right",
+                backdrop: true,
+                onShown: function () {
+                    if ($("#facets .facet:first").hasClass("collapsedfacet")) {
+                        $("#facets .facet.collapsedfacet:first a.expandable-panel-toggle").click();
+                    }
+                },
+            },
+            {
+                element: "#result1 .arrow-down",
+                title: "<?=$this->transEsc('basic_tour_step11_title')?>",
+                content: "<?=$this->transEsc('basic_tour_step11_content')?>",
+                placement: "auto left",
+                backdrop: true
+            },
+            {
+                element: "#result1 .edu-link",
+                title: "<?=$this->transEsc('basic_tour_step13_title')?>",
+                content: "<?=$this->transEsc('basic_tour_step13_content')?>",
+                placement: "auto bottom",
+                path: "/gei/Search/Results?lookfor=Berlin&type=AllFields&limit=20",
+                onShown: function (tour) {
+         	       scrollTourWndIntoView(tour);
+                },
+                backdrop: true
+            },
+            {
+                element: ".mainbody",
+                title: "<?=$this->transEsc('basic_tour_step14_title')?>",
+                content: "<?=$this->transEsc('basic_tour_step14_content')?>",
+                placement: "auto right",
+                path: "/gei/Record/gei564188840",
+                onShown: disablePrev,
+                backdrop: true
+            },
+            {
+                element: ".record-tabs",
+                title: "<?=$this->transEsc('basic_tour_step15_title')?>",
+                content: "<?=$this->transEsc('basic_tour_step15_content')?>",
+                placement: "auto top",
+                path: "/gei/Record/gei564188840",
+                onShown: function (tour) {
+         	       scrollTourWndIntoView(tour);
+                }
+            },
+            {
+                element: ".list-group",
+                title: "<?=$this->transEsc('basic_tour_step16_title')?>",
+                content: "<?=$this->transEsc('basic_tour_step16_content')?>",
+                placement: "auto top",
+                onShown: function (tour) {
+         	       scrollTourWndIntoView(tour);
+                }
+            },
+            /*{
+                element: ".record-tabpanel .tab3",
+                title: "<?=$this->transEsc('basic_tour_step17_title')?>",
+                content: "<?=$this->transEsc('basic_tour_step17_content')?>",
+                placement: "auto top",
+                onShown: function (tour) {
+         	       scrollTourWndIntoView(".tour-"+tour._options.name);
+                },
+                container: ".record-tabs"
+            },
+            {
+                element: ".record-tabpanel .tab4",
+                title: "<?=$this->transEsc('basic_tour_step18_title')?>",
+                content: "<?=$this->transEsc('basic_tour_step18_content')?>",
+                placement: "auto top",
+                onShow: function () {
+                    $(".tour-itbc-_BASIC_TOUR_").focus();
+                },
+            },
+            {
+                element: "#recordprevnext .btn:first",
+                title: "<?=$this->transEsc('basic_tour_step19_title')?>",
+                content: "<?=$this->transEsc('basic_tour_step19_content')?>",
+                placement: "auto bottom",
+                onShow: function () {
+                    $("#recordprevnext").on("click", ".btn", function (evt) {
+                        evt.preventDefault();
+                        window.location = evt.target.closest("a").getAttribute("href") + "#tour";
+                    });
+                },
+            },
+            {
+                element: "#topnavigation",
+                title: "<?=$this->transEsc('basic_tour_step20_title')?>",
+                content: "<?=$this->transEsc('basic_tour_step20_content')?>",
+                placement: "auto bottom",
+            },
+            {
+                element: "#feedbacklink",
+                title: "<?=$this->transEsc('basic_tour_step21_title')?>",
+                content: "<?=$this->transEsc('basic_tour_step21_content')?>",
+                placement: "auto bottom",
+            },
+            {
+                element: "#header .help-link",
+                title: "<?=$this->transEsc('basic_tour_step22_title')?>",
+                content: "<?=$this->transEsc('basic_tour_step22_content')?>",
+                placement: "auto bottom",
+            },
+            {
+                element: ".breadcrumbs-searchresults",
+                title: "<?=$this->transEsc('basic_tour_step23_title')?>",
+                content: "<?=$this->transEsc('basic_tour_step23_content')?>",
+                placement: "auto bottom",
+                onShow: function (tour) {
+                    $(".breadcrumbs-searchresults").one("click", function (evt) {
+                        evt.preventDefault();
+
+                        tour.end();
+
+                        window.location = $(evt.target).closest("a").getAttribute("href");
+                    });
+                },
+            },*/
+        ];
+    }
+
+    function createStepForTourRegardingFacts() {
+        return [
+            {
+                title: "<?=$this->transEsc('facts_tour_step1_title')?>",
+                content: "<?=$this->transEsc('facts_tour_step1_content')?>",
+                backdrop: true,
+            },
+            {
+                element: ".language",
+                title: "<?=$this->transEsc('facts_tour_step2_title')?>",
+                content: "<?=$this->transEsc('facts_tour_step2_content')?>",
+                placement: "auto left",
+                backdrop: true,
+            },
+            {
+                element: "#front-page-facets-div div:nth-child(1).col-sm-3",
+                title: "<?=$this->transEsc('facts_tour_step3_title')?>",
+                content: "<?=$this->transEsc('facts_tour_step3_content')?>",
+                placement: "auto left",
+                backdrop: true,
+            },
+            {
+                element: "#front-page-facets-div div:nth-child(1) a[title='EDISCO']",
+                title: "<?=$this->transEsc('facts_tour_step4_title')?>",
+                content: "<?=$this->transEsc('facts_tour_step4_content')?>",
+                placement: "auto left",
+                backdrop: true,
+            },
+            {
+                element: "#front-page-facets-div div:nth-child(1) a[title='EMMANUELLE']",
+                title: "<?=$this->transEsc('facts_tour_step5_title')?>",
+                content: "<?=$this->transEsc('facts_tour_step5_content')?>",
+                placement: "auto left",
+                backdrop: true,
+            },
+            {
+                element: "#front-page-facets-div div:nth-child(1) a[title='GEI']",
+                title: "<?=$this->transEsc('facts_tour_step6_title')?>",
+                content: "<?=$this->transEsc('facts_tour_step6_content')?>",
+                placement: "auto left",
+                backdrop: true,
+            },
+            {
+                element: "#front-page-facets-div div:nth-child(1) a[title='LIVRES']",
+                title: "<?=$this->transEsc('facts_tour_step7_title')?>",
+                content: "<?=$this->transEsc('facts_tour_step7_content')?>",
+                placement: "auto left",
+                backdrop: true,
+            },
+            {
+                element: "#front-page-facets-div div:nth-child(1) a[title='MANES']",
+                title: "<?=$this->transEsc('facts_tour_step8_title')?>",
+                content: "<?=$this->transEsc('facts_tour_step8_content')?>",
+                placement: "auto left",
+                backdrop: true,
+            },
+        ];
+    }
+    
+    function scrollTourWndIntoView(tour) {
+    var parent = $('html, body');
+    var offset = 10;
+              var elementOffset = $(tour._options.steps[tour.getCurrentStep()].element).position();
+              var popoverOffset = $(".tour-"+tour._options.name).position();
+
+		if (elementOffset.top < popoverOffset.top) {
+		parent.scrollTop( elementOffset.top - offset);
+		parent.scrollLeft( elementOffset.left);
+		} else {
+		parent.scrollTop( popoverOffset.top - offset);
+		parent.scrollLeft( popoverOffset.left);
+		}
+return;
+              offset = $(".tour-"+tour._options.name).offset();
+		$('html, body').animate({
+		    scrollTop: offset.top,
+		    scrollLeft: offset.left
+		}, 1);
+    }
+    
+    function disablePrev(tour) {
+        $(".tour-" + tour.getName() + "-" + tour.getCurrentStep() + " .btn[data-role=prev]")
+            .attr("disabled", "disabled")
+            .addClass("disabled");
+    }
+
+    function typeValue(input, value) {
+        if (value.length > 0) {
+            var current = $(input).val();
+            $(input).val(current + value.substr(0, 1));
+            if (value.length > 1) {
+                setTimeout(function () {
+                    typeValue(input, value.substr(1));
+                }, 30 + Math.floor(50 * Math.random()));
+            }
+        }
+    }
+
+    function startBasicTour() {
+        $("#modal .close").click();
+
+        localStorage.setItem("current_tour_name", BASIC_TOUR_NAME);
+
+        var oTour = initTour(BASIC_TOUR_NAME);
+
+        oTour.restart();
+    }
+
+    function startFactsTour() {
+        $("#modal .close").click();
+
+        localStorage.setItem("current_tour_name", FACTS_TOUR_NAME);
+
+        var oTour = initTour(FACTS_TOUR_NAME);
+
+        oTour.restart();
+    }
+
+    $(document).ready(function () {
+        var stCurrentTourName = localStorage.getItem("current_tour_name");
+
+        initTour(stCurrentTourName);
+    });
 </script>
+
