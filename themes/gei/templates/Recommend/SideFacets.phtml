@@ -60,17 +60,8 @@
 <?php $hierarchicalFacetSortOptions = $this->recommend->getHierarchicalFacetSortOptions() ?>
 <?php if (!empty($sideFacetSet) && $results->getResultTotal() > 0): ?>
   <?php foreach ($sideFacetSet as $title => $cluster): ?>
-    <!-- @Scheel - new code -->
-    <?php if ((isset($title) && substr($title, 0,  9) == 'catalogue') && !isset($catalogueSelected)){continue;} // scheel ?>
-    <!-- @Scheel - end -->
     <div class="facet-group facet-group-ex" id="side-panel-<?=$this->escapeHtmlAttr($title) ?>">
-      <!-- @Scheel - old code 
       <button class="title<?php if (in_array($title, $collapsedFacets)): ?> collapsed<?php endif ?>" data-toggle="collapse" href="#side-collapse-<?=$this->escapeHtmlAttr($title) ?>" >
-      -->        
-    <!-- @Scheel - new code -->
-    <button class="facet-group-title-ex title<?php if (in_array($title, $collapsedFacets)): ?> collapsed<?php endif ?><?= ((isset($title) && substr($title, 0,  9) == 'catalogue') && isset($catalogueSelected))?' cat-title':''; // scheel ?> " data-toggle="collapse" href="#side-collapse-<?=$this->escapeHtmlAttr($title) ?>" >
-        <?= ((isset($title) && substr($title, 0,  9) == 'catalogue') && isset($catalogueSelected))?$catalogueSelected:''; // scheel ?>
-    <!-- @Scheel - end -->        
         <?=$this->transEsc($cluster['label'])?>
       </button>
       <div id="side-collapse-<?=$this->escapeHtmlAttr($title) ?>" class="collapse<?php if (!in_array($title, $collapsedFacets)): ?> in<?php endif ?>"<?php if (in_array($title, $forceUncollapsedFacets)): ?> data-force-in="1"<?php endif ?>>

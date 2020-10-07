@@ -2,21 +2,13 @@
 <?php $i = $this->indexStart; ?>
 <?php foreach ($this->results->getResults() as $current): ?>
   <?php $recordNumber = $this->results->getStartRecord() + $i - $this->indexStart; ?>
-
-<!-- @Scheel - old code
-  <div id="result<?=$i++ ?>" class="result<?=$current->supportsAjaxStatus()?' ajaxItem':''?>">
--->
-<!-- @Scheel - new code -->
-<div id="result<?=$i++ ?>" class="result<?=$current->supportsAjaxStatus()?' ajaxItem':''?> edu-teaser edu_rv-teaser clearfix">
-<!-- @Scheel - end -->
-<!-- @Scheel - old code
+  <div id="result<?=$i++ ?>" class="result<?=$current->supportsAjaxStatus()?' ajaxItem':''?> edu-teaser edu_rv-teaser clearfix"> 
     <?php if (isset($this->showCheckboxes) && $this->showCheckboxes): ?>
       <?=$this->record($current)->getCheckbox('', 'search-cart-form', $recordNumber)?>
     <?php endif; ?>
     <div class="record-number">
       <?=$recordNumber ?>
     </div>
-    -->
     <?=$this->record($current)->getSearchResult('list')?>
   </div>
 <?php endforeach; ?>

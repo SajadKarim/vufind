@@ -1,0 +1,73 @@
+<?php 
+  $idAndClass = "id=\"more-narrowGroupHidden-" . $this->escapeHtmlAttr($this->title) . "\" class=\"facet narrow-toggle more-facets\"";
+  $moreClass = "narrowGroupHidden-" . $this->escapeHtmlAttr($this->title) . " hidden"; 
+
+  $buttonsHtml = "";  
+
+  if ($facetLightbox = $this->options->getFacetListAction())
+  {
+    $moreUrl = $this->url($facetLightbox) . $results->getUrlQuery()->getParams() . "&amp;facet=" . $this->title . "&amp;facetop=" . $thisFacet["operator"] . "&amp;facetexclude=" . ($this->allowExclude ? 1 : 0);
+  }    
+  else
+  {
+    $moreUrl = "#";
+  }
+  
+  if (($this->showMoreInLightbox && $this->showMoreInLightbox !== "more") && $facetLightbox)
+  {
+    $buttonsHtml .= "<a ".$idAndClass ." data-lightbox href=\"".$moreUrl ."\" rel=\"nofollow\"><span class=\"text\">".$this->transEsc("more")." ...</span></a>";
+  }
+  else
+  {
+    $buttonsHtml .= "<a ".$idAndClass ." href=\"".$moreUrl ."\" data-title=\"".$this->escapeHtmlAttr($this->title) ."\" rel=\"nofollow\"><span class=\"text\">".$this->transEsc("more")." ...</span></a>";
+  }
+
+
+  if ($this->showMoreInLightbox === "more" && $facetLightbox = $options->getFacetListAction())
+  {
+    $moreUrl = $this->url($facetLightbox) . $results->getUrlQuery()->getParams() . "&amp;facet=" . $this->title . "&amp;facetop=" . $thisFacet["operator"] . "&amp;facetexclude=" . ($this->allowExclude ? 1 : 0);
+      if (!empty($this->baseUriExtra)) {
+        $moreUrl .= "&amp;baseUriExtra=" . urlencode($this->baseUriExtra);
+      }
+
+    $buttonsHtml .= "<a class=\"facet narrow-toggle ".$moreClass ."\" data-lightbox href=\"".$moreUrl ."\" rel=\"nofollow\"><span class=\"text\">".$this->transEsc("see all")." ...</span></a>";
+  }
+  else
+  {
+  $buttonsHtml .= "<a class=\"facet narrow-toggle ".$moreClass ." less-facets\" href=\"#\" data-title=\"".$this->escapeHtmlAttr($this->title) ."\"><span class=\"text\">".$this->transEsc("less")." ...</span></a>";
+  }
+?>
+
+
+<?php $this->headScript()->appendFile('vendor/jsTree/jstree.min.js'); ?>
+<?php if (!in_array($this->title, $this->collapsedFacets)): ?>
+  <?php
+    $script = <<<JS
+$(document).ready(function() {
+  initFacetTree($('#facet_{$this->escapeHtml($this->title)}'), true, {$this->facets_before_more});
+  $('#facet_{$this->escapeHtml($this->title)}').parent().append('$buttonsHtml'); 
+});
+JS;
+  ?>
+  <?=$this->inlineScript(\Laminas\View\Helper\HeadScript::SCRIPT, $script, 'SET'); ?>
+<?php else: ?>
+  <?php
+  $script = <<<JS
+$('#side-collapse-{$this->escapeHtmlAttr($this->title)}').on('show.bs.collapse', function() {
+  initFacetTree($('#facet_{$this->escapeHtml($this->title)}'), true, {$this->facets_before_more});
+});
+JS;
+  ?>
+  <?=$this->inlineScript(\Laminas\View\Helper\HeadScript::SCRIPT, $script, 'SET'); ?>
+<?php endif; ?>
+<li id="facet_<?=$this->escapeHtml($this->title)?>" class="jstree-facet"
+    data-source="<?=$this->escapeHtml($this->searchClassId)?>"
+    data-facet="<?=$this->escapeHtmlAttr($this->title)?>"
+    data-path="<?=$this->currentPath()?>"
+    data-exclude="<?=$this->allowExclude?>"
+    data-operator="<?=$this->recommend->getFacetOperator($this->title)?>"
+    data-exclude-title="<?=$this->transEsc('exclude_facet')?>"
+    data-sort="<?=isset($this->sortOptions) ? $this->sortOptions : ''?>">
+</li>
+
+
