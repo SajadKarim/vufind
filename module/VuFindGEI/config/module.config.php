@@ -64,4 +64,15 @@ return array (
       ),
     ),
   ),
+  'controllers' => 
+  array (
+    'factories' => 
+    array (
+      'VuFindGEI\\Controller\\CartController' => 'VuFindGEI\\Controller\\CartControllerFactory',
+    ),
+    'aliases' => 
+    array (
+      'VuFind\\Controller\\CartController' => 'VuFindGEI\\Controller\\CartController',
+    ),
+  ),
 );
