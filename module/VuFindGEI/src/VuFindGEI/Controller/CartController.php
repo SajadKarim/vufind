@@ -38,32 +38,24 @@ class CartController extends \VuFind\Controller\CartController
      */
     public function exportallAction()
     {
-
-	//TODO: Complete the functionality.
-        // Get the desired ID list:
-        $ids = null === $this->params()->fromPost('selectAll')
-            ? $this->params()->fromPost('ids')
-            : $this->params()->fromPost('idsAll');
-        if (!is_array($ids) || empty($ids)) {
-            return $this->redirectToSource('error', 'bulk_noitems_advice');
-        }
-
         // Get export tools:
         $export = $this->getExport();
 
         // Process form submission if necessary:
         if ($this->formWasSubmitted('submit')) {
             $format = $this->params()->fromPost('format');
-            $url = $export->getBulkUrl($this->getViewRenderer(), $format, $ids);
-            if ($export->needsRedirect($format)) {
+            $url = $export->getBulkAllUrl($this->getViewRenderer(), $format, $ids);
+
+	// TODO: I commented out the following code as the query string does not contains Ids anymore.
+            /*if ($export->needsRedirect($format)) {
                 return $this->redirect()->toUrl($url);
-            }
+            }*/
             $exportType = $export->getBulkExportType($format);
             $params = [
                 'exportType' => $exportType,
                 'format' => $format
             ];
-            if ('post' === $exportType) {
+            /*if ('post' === $exportType) {
                 $records = $this->getRecordLoader()->loadBatch($ids);
                 $recordHelper = $this->getViewRenderer()->plugin('record');
                 $parts = [];
@@ -76,8 +68,9 @@ class CartController extends \VuFind\Controller\CartController
                 $params['targetWindow'] = $export->getTargetWindow($format);
                 $params['url'] = $export->getRedirectUrl($format, '');
             } else {
+            */
                 $params['url'] = $url;
-            }
+            /*}*/
             $msg = [
                 'translate' => false, 'html' => true,
                 'msg' => $this->getViewRenderer()->render(
@@ -89,7 +82,7 @@ class CartController extends \VuFind\Controller\CartController
 
         // Load the records:
         $view = $this->createViewModel();
-        $view->records = $this->getRecordLoader()->loadBatch($ids);
+        $view->records = [];
 
         // Assign the list of legal export options.  We'll filter them down based
         // on what the selected records actually support.
@@ -100,7 +93,49 @@ class CartController extends \VuFind\Controller\CartController
             $this->flashMessenger()
                 ->addMessage('bulk_export_not_supported', 'error');
         }
+        
+        $allowedLimit = $this->getConfig()->BulkExport->max_records_allowed;
+        
+	if ( $allowedLimit < $this->getRecordLoader()->getTotalRecords()) {
+            $this->flashMessenger()
+                ->addMessage('You are exceeding the limit to export the records. Only the first '. number_format($allowedLimit).' record(s) can be exported with your current settings.', 'info');
+	}
+
         return $view;
+    }
+
+    /**
+     * Actually perform the export operation.
+     *
+     * @return mixed
+     */
+    public function doexportallAction()
+    {
+        // We use abbreviated parameters here to keep the URL short (there may
+        // be a long list of IDs, and we don't want to run out of room):
+        //$ids = $this->params()->fromQuery('i', []);
+        $format = $this->params()->fromQuery('f');
+
+        // Make sure we have IDs to export:
+        //if (!is_array($ids) || empty($ids)) {
+        //    return $this->redirectToSource('error', 'bulk_noitems_advice');
+        //}
+
+        // Send appropriate HTTP headers for requested format:
+        $response = $this->getResponse();
+        $response->getHeaders()->addHeaders($this->getExport()->getHeaders($format));
+
+        // Actually export the records
+        $records = $collection = $this->getRecordLoader()->loadBatchPagewise(0);
+        $recordHelper = $this->getViewRenderer()->plugin('record');
+        $parts = [];
+        foreach ($records as $record) {
+            $parts[] = $recordHelper($record)->getExport($format);
+        }
+
+        // Process and display the exported records
+        $response->setContent($this->getExport()->processGroup($format, $parts));
+        return $response;
     }
 
 }

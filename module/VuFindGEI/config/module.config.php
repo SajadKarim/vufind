@@ -8,12 +8,16 @@ return array (
       'VuFindGEI\\RecordDriver\\PluginManager' => 'VuFindGEI\\ServiceManager\\AbstractPluginManagerFactory',
       'VuFindGEI\\Autocomplete\\Suggester' => 'VuFind\\Autocomplete\\SuggesterFactory',
       'VuFindGEI\\Search\\Solr\\HierarchicalFacetHelper' => 'Laminas\\ServiceManager\\Factory\\InvokableFactory',
+      'VuFindGEI\\Record\\Loader' => 'VuFindGEI\\Record\\LoaderFactory',
+      'VuFindGEI\\Export' => 'VuFindGEI\\ExportFactory',
     ),
     'aliases' => 
     array (
       'VuFind\\RecordDriver\\PluginManager' => 'VuFindGEI\\RecordDriver\\PluginManager',
       'VuFind\\Autocomplete\\Suggester' => 'VuFindGEI\\Autocomplete\\Suggester',
       'VuFind\\Search\\Solr\\HierarchicalFacetHelper' => 'VuFindGEI\\Search\\Solr\\HierarchicalFacetHelper',
+      'VuFind\\Record\\Loader' => 'VuFindGEI\\Record\\Loader',
+      'VuFind\\Export' => 'VuFindGEI\\Export',
     ),
   ),
   'vufind' => 
