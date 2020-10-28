@@ -6,6 +6,7 @@
         <?=$this->transEsc('select_page')?>
       </label>
       <input type="checkbox" class="checkbox-select-allpages" name="selectAllPages" id="<?=$this->idPrefix?>addFormCheckboxSelectAllPages"<?php if ($this->formAttr): ?> form="<?=$this->escapeHtmlAttr($this->formAttr) ?>"<?php endif; ?>/>
+      <input type="hidden" id="currentQueryString" name="currentQueryString" value="<?=$this->currentPath() . $this->results->getUrlQuery()?>">
       <label for="<?=$this->idPrefix?>addFormCheckboxSelectAllPages">
         <?=$this->transEsc('select_all_page')?>
       </label>

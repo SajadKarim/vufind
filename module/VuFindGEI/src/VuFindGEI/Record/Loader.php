@@ -30,12 +30,12 @@ class Loader extends \VuFind\Record\Loader
      * @return array     Array of record drivers
      */
     public function loadBatchPagewise(
-        $offset, $tolerateBackendExceptions = false, $params = []
+        $query, $offset, $limit, $tolerateBackendExceptions = false, $params = []
     ) {   
 
-        $query  = new Query('*:*');//$this->getParams()->getQuery();
-        $limit  = 1000;//$this->getParams()->getLimit();
-        $offset = 10;//$this->getStartRecord() - 1;
+        //$query  = new Query($queryString);//$this->getParams()->getQuery();
+        //$limit  = 1000;//$this->getParams()->getLimit();
+        //$offset = 10;//$this->getStartRecord() - 1;
         //$params = $this->getParams()->getBackendParameters();
         //$searchService = $this->getSearchService();
         //$cursorMark = $this->getCursorMark();
@@ -69,9 +69,9 @@ class Loader extends \VuFind\Record\Loader
         return $records;
     }
     
-    public function getTotalRecords($params = []) {   
+    public function getTotalRecords($query, $params = []) {   
 
-        $query  = new Query('');//$this->getParams()->getQuery();
+        //$query  = new Query('');//$this->getParams()->getQuery();
         //$limit  = 10;//$this->getParams()->getLimit();
         //$offset = 10;//$this->getStartRecord() - 1;
         //$params = $this->getParams()->getBackendParameters();

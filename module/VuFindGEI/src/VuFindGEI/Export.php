@@ -4,6 +4,8 @@ namespace VuFindGEI;
 
 class Export extends \VuFind\Export
 {
+     protected $queryString;
+     
     /**
      * Get the URL for bulk export.
      *
@@ -13,13 +15,15 @@ class Export extends \VuFind\Export
      *
      * @return string
      */
-    public function getBulkAllUrl($view, $format, $ids)
+    public function getBulkAllUrl($view, $format, $queryString)
     {
         $params = [];
         $params[] = 'f=' . urlencode($format);
-        foreach ($ids as $id) {
-            $params[] = urlencode('i[]') . '=' . urlencode($id);
-        }
+        $params[] = 'ss=' . urlencode($queryString);
+
+        //foreach ($ids as $id) {
+        //    $params[] = urlencode('i[]') . '=' . urlencode($id);
+        //}
         $serverUrlHelper = $view->plugin('serverurl');
         $urlHelper = $view->plugin('url');
         $url = $serverUrlHelper($urlHelper('cart-doexport'))
@@ -28,5 +32,16 @@ class Export extends \VuFind\Export
         return $this->needsRedirect($format)
             ? $this->getRedirectUrl($format, $url) : $url;
     }
+    
+    public function setQueryString($queryString)
+    {
+      $this->queryString = $queryString;
+    }
+    
+    public function getQueryString()
+    {
+      return $this->queryString;
+    }
+
 }
 
