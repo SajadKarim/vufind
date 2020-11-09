@@ -15,15 +15,16 @@ class Export extends \VuFind\Export
      *
      * @return string
      */
-    public function getBulkAllUrl($view, $format, $queryString)
+    public function getBulkAllUrl($view, $format, $ids, $queryString)
     {
         $params = [];
         $params[] = 'f=' . urlencode($format);
-        $params[] = 'ss=' . urlencode($queryString);
+        $params[] = 'qs=' . urlencode($queryString);
 
-        //foreach ($ids as $id) {
-        //    $params[] = urlencode('i[]') . '=' . urlencode($id);
-        //}
+        foreach ($ids as $id) {
+            $params[] = urlencode('i[]') . '=' . urlencode($id);
+        }
+        
         $serverUrlHelper = $view->plugin('serverurl');
         $urlHelper = $view->plugin('url');
         $url = $serverUrlHelper($urlHelper('cart-doexport'))

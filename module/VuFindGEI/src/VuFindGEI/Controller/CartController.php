@@ -46,10 +46,15 @@ class CartController extends \VuFind\Controller\CartController
      */
     public function exportallAction()
     {
+    	/*
+    	 * Following code extract Result's page query string from the request and 
+    	 * prepares Params and Export object for later use in the method.
+    	 */
 	$rawRequest = [];
       	$queryString = html_entity_decode(parse_url($this->params()->fromPost('currentQueryString'))['query']);
     	parse_str($queryString, $rawRequest);
-
+	$rawRequest["fl"] = "id";
+	 
         // Format the request object:
         $request = $rawRequest instanceof Parameters
             ? $rawRequest
@@ -59,25 +64,45 @@ class CartController extends \VuFind\Controller\CartController
 	$options = new \VuFind\Search\Solr\Options(new \VuFind\Config\PluginManager(null));
 	$params = new \VuFind\Search\Solr\Params($options, new \VuFind\Config\PluginManager(null));
 
-        // Get export tools:
-        $export = $this->getExport();
+	$params->initFromRequest($request);
+
+	$export = $this->getExport();
 	$export->setQueryString($this->params()->fromPost('currentQueryString'));
 
+
+	$recordsPerRequest = $this->getConfig()->BulkExport->records_per_request;
+	$allowedLimit = $this->getConfig()->BulkExport->max_records_allowed;
+	
+	$collection = [];
+	$ids = [];
+	
+	for ($page = 0; $page < $allowedLimit; $page += $recordsPerRequest)
+	{
+          $collection = array_merge($collection, $this->getRecordLoader()->loadBatchPagewise($params->getQuery(), $page, $recordsPerRequest));	
+        }
+	
+  	foreach ($collection as $obj)
+  	{  	
+	   $ids[] = $obj->getOriginalID();
+  	}
+  	
         // Process form submission if necessary:
         if ($this->formWasSubmitted('submit')) {
             $format = $this->params()->fromPost('format');
-            $url = $export->getBulkAllUrl($this->getViewRenderer(), $format, $this->params()->fromPost('currentQueryString'));
+            $url = $export->getBulkAllUrl($this->getViewRenderer(), $format, [], $this->params()->fromPost('currentQueryString'));
 
-	// TODO: I commented out the following code as the query string does not contains Ids anymore.
-            /*if ($export->needsRedirect($format)) {
+            /* Moved following logic to exportall.phtml.
+            if ($export->needsRedirect($format)) {
                 return $this->redirect()->toUrl($url);
-            }*/
+            }
+            */
+            
             $exportType = $export->getBulkExportType($format);
             $params = [
                 'exportType' => $exportType,
                 'format' => $format
             ];
-            /*if ('post' === $exportType) {
+            if ('post' === $exportType) {
                 $records = $this->getRecordLoader()->loadBatch($ids);
                 $recordHelper = $this->getViewRenderer()->plugin('record');
                 $parts = [];
@@ -90,9 +115,8 @@ class CartController extends \VuFind\Controller\CartController
                 $params['targetWindow'] = $export->getTargetWindow($format);
                 $params['url'] = $export->getRedirectUrl($format, '');
             } else {
-            */
                 $params['url'] = $url;
-            /*}*/
+            }
             $msg = [
                 'translate' => false, 'html' => true,
                 'msg' => $this->getViewRenderer()->render(
@@ -104,7 +128,9 @@ class CartController extends \VuFind\Controller\CartController
 
         // Load the records:
         $view = $this->createViewModel();
-        $view->records = [];
+        $view->records = $collection;
+        $view->ids = $ids;
+
 
         // Assign the list of legal export options.  We'll filter them down based
         // on what the selected records actually support.
@@ -133,7 +159,12 @@ class CartController extends \VuFind\Controller\CartController
      */
     public function doexportallAction()
     {
-    	$searchString = $this->params()->fromQuery('ss');
+	/*
+    	 * Following code extract Result's page query string from the request and 
+    	 * prepares Params and Export object for later use in the method.
+    	 */
+
+    	$searchString = $this->params()->fromQuery('qs');
     
   	$rawRequest = [];
       	$queryString = html_entity_decode(parse_url($searchString)['query']);
@@ -148,13 +179,16 @@ class CartController extends \VuFind\Controller\CartController
 	$options = new \VuFind\Search\Solr\Options(new \VuFind\Config\PluginManager(null));
 	$params = new \VuFind\Search\Solr\Params($options, new \VuFind\Config\PluginManager(null));
 
+	$params->initFromRequest($request);
+
     
 	$recordsPerRequest = $this->getConfig()->BulkExport->records_per_request;
         $allowedLimit = $this->getConfig()->BulkExport->max_records_allowed;
 	
+	$records = [];
 	for ($page = 0; $page < $allowedLimit; $page += $recordsPerRequest)
 	{
-          $records = $collection = $this->getRecordLoader()->loadBatchPagewise($params->getQuery(), $page, $recordsPerRequest);	
+          $records = array_merge($records, $this->getRecordLoader()->loadBatchPagewise($params->getQuery(), $page, $recordsPerRequest));	
 	}
 
         // We use abbreviated parameters here to keep the URL short (there may
