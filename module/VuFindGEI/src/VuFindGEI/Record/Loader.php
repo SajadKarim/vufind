@@ -92,9 +92,6 @@ class Loader extends \VuFind\Record\Loader
         $query, $offset, $limit, $tolerateBackendExceptions = false, $params = []
     ) {   
     
-  //  $query.replaceTerm("fl","fl=id");
-    	error_log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . $query->getString());
-
 	$records = [];
         try {
             $records = $this->searchService

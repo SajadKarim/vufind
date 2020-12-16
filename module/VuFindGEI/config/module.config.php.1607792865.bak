@@ -77,17 +77,6 @@ return array (
           'VuFind\\Search\\Solr\\Options' => 'VuFindGEI\\Search\\Solr\\Options',
         ),
       ),
-      'recommend' => 
-      array (
-        'factories' => 
-        array (
-          'VuFindGEI\\Recommend\\SideFacets' => 'VuFindGEI\\Recommend\\SideFacetsFactory',
-        ),
-        'aliases' => 
-        array (
-          'VuFind\\Recommend\\SideFacets' => 'VuFindGEI\\Recommend\\SideFacets',
-        ),
-      ),
     ),
   ),
   'controllers' => 
