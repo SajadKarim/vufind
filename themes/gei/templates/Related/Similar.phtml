@@ -1,0 +1,45 @@
+<!-- @Scheel - new code -->
+<div class="">
+<!-- @Scheel - end -->
+<?php echo 'class::::'.get_class($this); ?>
+<?php $similarRecords = $this->related->getResults(); ?>
+<!-- @Scheel - new code -->
+<div class="list-group filters">
+  <div class="list-group-item title"><?=$this->transEsc('Similar Items')?></div>
+<?php if (!empty($similarRecords) && sizeof($similarRecords)!=0): ?>
+  <?php foreach ($similarRecords as $data): ?>
+      <span class="list-group-item">
+<!-- @Scheel - end -->
+
+        <?php $formats = $data->getFormats(); ?>
+        <i class="fa fa-x<?php if (count($formats) > 0): ?> fa-<?=preg_replace('/[^a-z0-9]/', '', strtolower($formats[0]))?>" title="<?=$formats[0] ?><?php endif; ?>"></i>
+        <a href="<?=$this->recordLink()->getUrl($data)?>">
+          <?=$this->escapeHtml($this->driver->getShortTitle() . ' ' . $this->driver->getSubtitle() . ' ' . $this->driver->getTitleSection())?>        </a>
+
+<!-- @Scheel - new code -->
+<?php $author = $data->getPrimaryAuthor(); if (!empty($author)): ?>
+          <br/><?=$this->transEsc('by')?>: <?=$this->escapeHtml($author);?>
+<!-- @Scheel - end -->
+
+        <?php endif; ?>
+        <?php $pubDates = $data->getPublicationDates(); if (!empty($pubDates)): ?>
+          <br/><?=$this->transEsc('Published')?>: (<?=$this->escapeHtml($pubDates[0])?>)
+        <?php endif; ?>
+
+<!-- @Scheel - new code -->
+</span>
+    <?php endforeach; ?>
+<!-- @Scheel - end -->
+
+<?php else: ?>
+
+<!-- @Scheel - new code -->
+<span class="list-group-item">
+		<p><?=$this->transEsc('Cannot find similar records')?></p>
+	</span>
+<?php endif; ?>
+  </div>
+
+</div>
+<!-- @Scheel - end -->
+

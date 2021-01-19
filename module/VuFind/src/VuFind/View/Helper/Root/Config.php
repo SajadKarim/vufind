@@ -88,4 +88,14 @@ class Config extends \Laminas\View\Helper\AbstractHelper
     {
         return $this->get('config')->Content->ajaxcovers ?? false;
     }
+
+    /**
+     * Is demo mode enabled?
+     *
+     * @return bool
+     */
+    public function demoEnabled()
+    {
+        return $this->get('config')->Site->enableDemo;
+    }
 }

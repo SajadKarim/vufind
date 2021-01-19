@@ -1,0 +1,30 @@
+<?php $localclassification = $data; if (!empty($localclassification)): ?>
+
+<ul>
+
+<?php foreach ($localclassification as $subfield => $field): ?>
+<li>
+<?=trim($this->escapeHtml($this->transEsc($subfield)))?>:
+<?php if(is_array($field) && count($field) == 1) $field = $field[0]; ?>
+
+<?php $i = 0; foreach ($field as $f): ?>
+<?php if (count($field) > 1): ?></br>&nbsp&nbsp&nbsp<?php endif; ?>
+  <?php 
+    /*scheel*/
+	$subject = $f;
+	if(substr( $subject, -1 ) == '/'){ //ends with slash (-> is hierarchical -> reduce to the last part)
+		$subject = substr($subject, 0, strlen($subject)-1);	
+		if(strripos( $subject, '/' ) > -1){
+			$subject = substr($subject, strripos( $subject, '/' )+1);
+		}
+	}
+  ?>
+  <a title="<?=trim($this->escapeHtml($this->transEsc($subject)))?>" href="<?=$this->record($this->driver)->getLink('filter', [$subfield,$f])?>" rel="nofollow"><?=trim($this->escapeHtml($this->transEsc($subject)))?></a>
+  
+<?php endforeach; ?>
+</li>
+<?php endforeach; ?>
+</ul>
+
+<?php endif; ?>
+

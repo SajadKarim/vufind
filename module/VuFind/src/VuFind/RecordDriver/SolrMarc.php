@@ -43,5 +43,5 @@ class SolrMarc extends SolrDefault
 {
     use IlsAwareTrait;
     use MarcReaderTrait;
-    use MarcAdvancedTrait;
+    use MarcAdvancedTrait;    
 }

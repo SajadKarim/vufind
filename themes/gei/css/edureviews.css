@@ -1,0 +1,38 @@
+.hero {
+    height: 155px;
+    padding-top: 36px;
+    background-image: url("../img/header/header-img-edureviews@2x.jpg")
+}
+@media screen and (min-width: 481px) {
+    .hero {
+        height: 205px
+    }
+}
+@media screen and (min-width: 769px) {
+    .hero {
+        height: 255px
+    }
+}
+.edu_rv-teaser:before,
+.edu_rv-teaser:after {
+    content: " ";
+    display: table
+}
+.edu_rv-teaser:after {
+    clear: both
+}
+.edu_rv-detail__img img {
+    width: 100%
+}
+.edu_rv-link-list li {
+    margin: 0 0 12px 0
+}
+@media screen and (min-width: 481px),
+print {
+    figure.edu_rv-detail__img {
+        float: left;
+        margin: 0 24px 0 0;
+        max-width: 25%
+    }
+}
+/*# sourceMappingURL=edureviews.css.map */

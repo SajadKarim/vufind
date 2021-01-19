@@ -124,6 +124,9 @@ class SolrDefault extends DefaultRecord implements Feature\VersionAwareInterface
     public function __construct($mainConfig = null, $recordConfig = null,
         $searchSettings = null
     ) {
+
+	//echo '<pre>' . debug_print_backtrace() . '</pre>';
+	//throw new Exception('x');
         // Load snippet settings:
         $this->snippet = !isset($searchSettings->General->snippets)
             ? false : $searchSettings->General->snippets;
