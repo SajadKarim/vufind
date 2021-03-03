@@ -1,0 +1,222 @@
+// The result list
+//
+.result {
+  display: block;
+  padding-top: 20px;
+   > .checkbox {
+    @include visuallyhidden;
+  }
+}
+
+
+// A single result card
+//
+.gei-result {
+  width: 100%;
+  border-bottom: 5px solid $color_text;
+  background: white;
+  box-shadow: $shadow_card;
+
+  @each $name, $color in $theme {
+    &.theme-#{$name} {
+      border-bottom-color: $color;
+      mark,
+      .highlight {
+        background: rgba($color, .1);
+      }
+    }
+  }
+}
+
+.gei-result__header,
+.gei-result__footer {
+  font-size: $fs_small;
+  line-height: 20px;
+  padding: 10px 20px;
+  color: $color_mute;
+}
+
+.gei-result__header {
+  display: flex;
+  border-bottom: 1px solid rgba($color_line, .5);
+}
+
+.gei-result__footer {
+  border-top: 1px solid rgba($color_line, .5);
+  &::before {
+    content: none;
+  }
+  &:empty {
+    display: none;
+  }
+}
+
+.gei-result__checkbox {
+  margin: 0 10px 0 -10px;
+
+  .record-checkbox {
+    position: relative;
+    display: block;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    border: 1px solid $color_line;
+    background-color: $color_form_bg;
+    box-shadow: $shadow_input;
+  }
+
+  .checkbox-icon {
+    display: block;
+    width: 20px;
+    height: 20px;
+    opacity: 0;
+    &::after {
+      position: absolute;
+      top: 1px;
+      left: 2px;
+      display: inline-block;
+      width: 11px;
+      height: 6px;
+      margin: 4px 0 0 2px;
+      content: '';
+      transform: rotate(-45deg);
+      border-bottom: 2px solid $color_text_light;
+      border-left: 2px solid $color_text_light;
+    }
+  }
+
+  input[type='checkbox'] {
+    position: absolute;
+    top: -400px;
+    left: -400px;
+    opacity: 0; // visually hide but keep user selectable by tabbing
+    &:checked + .checkbox-icon {
+      opacity: 1;
+    }
+  }
+}
+
+.gei-result__portal {
+  font-family: $font_ui;
+  margin: 0 20px 0 0;
+}
+
+.gei-result__actions {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -5px;
+}
+
+.gei-result__action,
+.gei-result__action-favorite {
+  padding: 5px;
+}
+
+.gei-result__action--saved {
+  color: $color_mute;
+  border: 0;
+  background: none;
+  margin: 0;
+  &.loaded {
+    display: inline;
+  }
+  * {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  li:not(:last-child) {
+    &::after {
+      content: ', ';
+    }
+  }
+}
+
+.gei-result__action--delete {
+  margin-left: auto;
+}
+
+.gei-result__body {
+  padding: 10px 20px 30px;
+}
+
+.gei-result__image {
+  margin: 0 0 15px 0;
+
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+.gei-result__kicker {
+  font-size: $fs_small;
+  margin: 0 0 5px 0;
+  color: $color_dimmed;
+}
+
+.gei-result__title {
+  font-size: $fs_large;
+  line-height: 1.2;
+  margin: 0 0 15px 0;
+  a {
+    color: currentcolor;
+  }
+}
+
+.gei-result__meta {
+  font-size: $fs_small;
+  margin: 0 0 15px 0;
+  color: $color_dimmed;
+  .gei-result__title + & {
+    margin-top: -10px;
+  }
+}
+
+.gei-result__data {
+  font-size: $fs_small;
+  margin: -3px;
+  th {
+    font-weight: 400;
+    white-space: nowrap;
+    color: $color_dimmed;
+    &::after {
+      content: ':';
+    }
+  }
+  th,
+  td {
+    padding: 3px;
+    vertical-align: top;
+  }
+
+  & + .gei-result__snippet {
+    margin-top: 15px;
+  }
+}
+
+.gei-result__links {
+  margin: 15px 0 0 0;
+   > span {
+    &:not(:first-child) {
+      &::before {
+        content: ' | ';
+        color: $color_mute;
+      }
+    }
+  }
+}
+
+@include breakpoint(br(min-width, m)) {
+  .gei-result__content {
+    display: flex;
+  }
+  .gei-result__image {
+    flex: 0 0 120px;
+    margin: 0 20px 0 0;
+  }
+}

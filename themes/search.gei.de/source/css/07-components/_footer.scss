@@ -1,0 +1,52 @@
+.gei-site-footer {
+  line-height: 1.2;
+  width: 100%;
+  padding: 20px 0;
+  color: $color_dimmed;
+  box-shadow: $shadow_site_section;
+}
+
+.gei-footer-info__logo {
+  margin: 20px  0 0 0;
+}
+
+.gei-footer-nav {
+  margin-top: 20px;
+}
+
+@include breakpoint(br(max-width, s)) {
+  .gei-site-footer {
+    font-size: $fs_small;
+  }
+}
+
+@include breakpoint(br(min-width, m)) {
+  .gei-site-footer {
+    padding: 40px 0 20px 0;
+  }
+
+  .gei-footer-nav,
+  .gei-footer-info {
+    max-width: $w_front;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .gei-footer-nav {
+    li {
+      display: inline;
+      &:not(:first-child)::before {
+        content: ' | ';
+      }
+    }
+  }
+
+  .gei-footer-info {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .gei-footer-info__logo {
+    margin: 0 0 0 40px;
+  }
+}

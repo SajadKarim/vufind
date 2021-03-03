@@ -1,0 +1,15 @@
+.modal-body {
+  .mainbody {
+    width: auto;
+    &.right,
+    &.left {
+      float: none;
+      padding: 0;
+    }
+  }
+}
+
+.modal-content {
+  border-radius: 0;
+  border: 0;
+}

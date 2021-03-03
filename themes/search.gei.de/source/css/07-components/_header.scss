@@ -1,0 +1,118 @@
+.gei-header {
+  position: relative;
+}
+
+.gei-header--compact {
+  .gei-header__logo {
+    width: 140px;
+    margin: auto;
+  }
+}
+
+.gei-header__tools {
+  padding: 0;
+}
+
+
+.gei-header__logo-link {
+  display: block;
+  overflow: hidden;
+  height: 0;
+  padding-top: percentage($ratio_logo);
+  text-indent: 200%;
+  background: url('../../gei/images/logo-gei-suche.svg') no-repeat center / contain;
+}
+
+
+@include breakpoint(br(max-width, s)) {
+  .gei-header {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+
+    .gei-header__toggle {
+      position: absolute;
+      top: 0;
+      right: -10px;
+      margin: 0;
+    }
+
+    .gei-header__tools {
+      order: -1;
+      margin: 0 -15px;
+      .navbar-nav {
+        margin: 0;
+      }
+      .navbar-collapse {
+        padding: 0;
+      }
+    }
+  }
+
+  .gei-header--compact {
+    .gei-header__logo {
+      margin-top: 70px;
+    }
+  }
+
+  .gei-header--extended {
+    .gei-header__logo-col {
+      padding: 0;
+    }
+
+    .gei-header__logo {
+      width: 40px / $ratio_logo;
+      margin: 20px auto 10px auto;
+    }
+  }
+}
+
+
+@include breakpoint(br(min-width, m)) {
+  .gei-header--compact {
+    padding: 100px 0 0 0;
+
+    .gei-header__logo {
+      width: 260px;
+    }
+
+    .gei-header__tools {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
+
+  .gei-header--extended {
+    display: flex;
+    align-items: center;
+    padding: 40px 0;
+
+    .gei-header__logo {
+      width: 70px / $ratio_logo;
+      margin: -5px 20px -5px 0;
+    }
+
+    .gei-header__searchbox {
+      flex: 1 1 auto;
+      padding-left: 15px;
+    }
+
+    .gei-header__tools {
+      margin-left: auto;
+      padding-left: 15px;
+    }
+  }
+}
+
+@include breakpoint(br(min-width, m)) {
+  .gei-header--extended {
+    padding: 50px 0 30px 0;
+    .gei-header__tools {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
+}
+

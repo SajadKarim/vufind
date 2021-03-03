@@ -1,0 +1,23 @@
+//////////////////////////
+// Base font size
+//////////////////////////
+html {
+  line-height: $lh_base;
+}
+
+//////////////////////////
+// Base Typo
+//////////////////////////
+body {
+  color: $color_text;
+}
+
+body,
+button,
+input,
+textarea,
+select {
+  font-family: $font_text;
+  font-size: $fs_base;
+  line-height: $lh_base;
+}

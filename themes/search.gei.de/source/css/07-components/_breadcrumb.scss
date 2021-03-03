@@ -1,0 +1,16 @@
+.gei-breadcrumb {
+  font-size: $fs_small;
+  display: flex;
+  margin: -35px 0 0 0;
+  padding: 0;
+  list-style: none;
+  color: $color_mute;
+  li {
+    &:not(.active) {
+      &::after {
+        content: ' ›';
+      }
+      margin: 0 5px 0 0;
+    }
+  }
+}

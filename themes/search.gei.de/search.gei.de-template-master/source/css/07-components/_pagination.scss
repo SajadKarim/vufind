@@ -1,0 +1,29 @@
+.pagination {
+  margin: 17px -3px 37px -3px;
+}
+
+.pagination > li > a,
+.pagination > li > span {
+  font-size: $fs_small;
+  margin: 3px;
+  color: $color_dimmed;
+  border: 0;
+  border-radius: 0 !important;
+}
+
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+  background-color: $color_red;
+}
+
+.pagination > li > a:hover,
+.pagination > li > span:hover,
+.pagination > li > a:focus,
+.pagination > li > span:focus {
+  color: white;
+  background-color: $color_blue;
+}

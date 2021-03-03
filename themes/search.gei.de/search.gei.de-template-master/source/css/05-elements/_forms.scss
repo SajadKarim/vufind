@@ -1,0 +1,92 @@
+
+//////////////////////////
+// Input elements
+//////////////////////////
+input[type='text'],
+input[type='password'],
+input[type='search'],
+select,
+select.form-control,
+textarea,
+textarea.form-control {
+  font-weight: 400;
+  padding: 5px 10px;
+  border: 0;
+  border-radius: 0;
+  background: $color_form_bg;
+  box-shadow: $shadow_input;
+  &:focus {
+    outline: 0;
+    box-shadow: $shadow_input;
+  }
+}
+
+input[type='text'],
+input[type='password'],
+input[type='search'],
+input,
+select {
+}
+
+input[type='checkbox'],
+input[type='radio'],
+input[type='range'],
+input[type='file'] {
+  line-height: normal;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+// remove ff button padding
+::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+
+//////////////////////////
+// Select
+//////////////////////////
+select,
+select.form-control {
+  // add arrow img
+  cursor: pointer;
+  background-color: $color_form_bg;
+  appearance: none;
+
+  &:not([multiple]) {
+    padding-right: 30px;
+    background-image: svg-uri('<svg width="8" height="4" viewBox="0 0 8 4" xmlns="http://www.w3.org/2000/svg"><path fill="#{ $color_mute }" d="M4 4l4-4H0z" fill-rule="evenodd"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+  }
+}
+// remove IE10 select arrow
+select::-ms-expand {
+  display: none;
+}
+
+
+//////////////////////////
+// Labels
+//////////////////////////
+label {
+  &[for] {
+    cursor: pointer;
+  }
+}
+
+//////////////////////////
+// Browser validation
+//////////////////////////
+input:invalid,
+textarea:invalid {
+}
+
+//////////////////////////
+// Button
+//////////////////////////
+input[type='submit'] {
+}

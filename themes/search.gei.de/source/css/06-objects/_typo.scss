@@ -1,0 +1,23 @@
+small,
+.small {
+  font-size: $fs_small;
+}
+
+.dimmed {
+  color: $color_dimmed;
+}
+
+.mute {
+  color: $color_mute;
+}
+
+mark,
+.highlight {
+  padding: .03em .2em;
+  border-radius: 1px;
+  background: $color_hilight;
+}
+
+.visuallyhidden {
+  @include visuallyhidden;
+}

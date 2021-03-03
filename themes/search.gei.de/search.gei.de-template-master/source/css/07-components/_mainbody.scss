@@ -1,0 +1,15 @@
+.mainbody,
+.gei-mainbody {
+  h2 {
+    font-size: $fs_medium;
+    font-weight: 400;
+    margin: 0 0 10px 0;
+    color: $color_text;
+  }
+}
+
+.gei-mainbody__header {
+  .form-inline {
+    margin-bottom: 10px;
+  }
+}

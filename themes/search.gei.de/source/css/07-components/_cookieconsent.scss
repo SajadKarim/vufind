@@ -1,0 +1,14 @@
+.cc-revoke,
+.cc-window {
+  font-family: $font_text;
+  font-size: $fs_base;
+}
+
+.cc-btn.cc-dismiss {
+  @include on-event {
+    @include on-event {
+      text-decoration: none;
+      background: $color_link;
+    }
+  }
+}

@@ -1,0 +1,144 @@
+.sidebar .list-group {
+  .list-group-item {
+    font-family: $font_ui;
+    line-height: 24px;
+    position: relative;
+    margin: 0 0 6px 0;
+    padding: 0 6px 0 30px;
+    color: $color_dimmed;
+    border: 0;
+    border-left: 5px solid rgba($color_text, .5);
+    border-radius: 0;
+    background: #fff;
+
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+      color: $color_text_light;
+      border-color: $color_text;
+    }
+
+    &.active:hover,
+    &.active:focus,
+    &.active:active {
+      border-left-color: darken($color_text, 10%);
+    }
+
+    &.title {
+      font-family: $font_text;
+      font-size: $fs_small;
+      font-weight: 400;
+      padding: 0;
+      color: $color_dimmed;
+      border: 0;
+      background: transparent;
+      &::after {
+        font-size: $fs_tiny;
+      }
+      &::before {
+        display: none;
+      }
+    }
+
+    @each $name, $color in $theme {
+      &.theme-#{$name} {
+        border-left-color: rgba($color, .5);
+        &:hover,
+        &:focus,
+        &:active,
+        &.active {
+          border-left-color: $color;
+        }
+        &.active:hover,
+        &.active:focus,
+        &.active:active {
+          border-left-color: darken($color, 10%);
+        }
+      }
+    }
+
+    // Checkbox
+    .fa-times,
+    .fa-square-o,
+    .fa-check-square-o {
+      position: absolute;
+      top: 0;
+      left: 1px;
+      display: block;
+      width: 24px;
+      height: 24px;
+      background: $color_placeholder;
+
+      &::before,
+      &::after {
+        content: '';
+      }
+    }
+
+    .fa-square-o {
+      background: rgba($color_placeholder, .5);
+    }
+
+    .fa-check-square-o {
+      &::after {
+        position: absolute;
+        top: 7px;
+        left: 5px;
+        display: block;
+        width: 14px;
+        height: 8px;
+        transform: rotate(-45deg);
+        border-bottom: 3px solid white;
+        border-left: 3px solid white;
+      }
+    }
+
+    .fa-times {
+      &::before,
+      &::after {
+        position: absolute;
+        top: 10px;
+        left: 5px;
+        display: block;
+        width: 14px;
+        height: 3px;
+        transform: rotate(-45deg);
+        background: white;
+      }
+      &::after {
+        transform: rotate(45deg);
+      }
+    }
+
+    // Badge
+    .badge {
+      font-weight: 400;
+      line-height: 24px;
+      padding: 0;
+      color: $color_mute;
+      background: transparent;
+    }
+  }
+
+  // overwrite treeview
+  .jstree-anchor {
+    display: block;
+    margin: 0;
+    padding: 0;
+
+    @include on-event {
+      text-decoration: none;
+    }
+  }
+
+  .jstree-icon {
+    display: none !important;
+  }
+
+  .jstree-facet .jstree-container-ul > li.active,
+  .jstree-facet .jstree-container-ul > li.active a.jstree-anchor {
+    background: none;
+    color: inherit;
+  }
+}

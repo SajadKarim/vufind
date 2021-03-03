@@ -1,0 +1,52 @@
+{
+  "root": {
+    "base": "./",
+    "node": "./node_modules",
+    "src": "./",
+    "build": "./"
+  },
+  "actions": {
+    "watch": ["css", "images", "templates"],
+    "clean": ["css", "images"],
+    "build": ["assets", "css", "images"]
+  },
+  "tasks": {
+    "serve": {
+      "proxy": "localhost:8080/vufind"
+    },
+    "css": {
+      "src": "source/css",
+      "dest": "css",
+      "sass": {
+        "outputStyle": "compressed"
+      },
+      "autoprefixer": {
+        "browsers": ["> 1%","last 7 versions","ie >= 9"],
+        "remove": false
+      },
+      "extensions": ["sass", "scss", "css"]
+    },
+
+    "images": {
+      "src": "source/images",
+      "dest": "images",
+      "extensions": ["jpg", "png", "svg", "gif", "ico"]
+    },
+
+    "templates": {
+      "src": "templates",
+      "extensions": ["phtml"]
+    },
+
+    "assets": {
+      "js": {
+        "src": ["node_modules/cookieconsent/build/cookieconsent.min.js"],
+        "dest": "js/vendor"
+      },
+      "css": {
+        "src": ["node_modules/cookieconsent/build/cookieconsent.min.css"],
+        "dest": "css/vendor"
+      }
+    }
+  }
+}

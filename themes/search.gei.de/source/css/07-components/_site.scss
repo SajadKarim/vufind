@@ -1,0 +1,33 @@
+.site--home {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  .gei-site-main {
+    margin-top: auto;
+    margin-bottom: auto;
+    padding: 50px 0 50px 0;
+  }
+
+  .gei-site-footer {
+    margin-top: auto;
+    background: $color_fond;
+  }
+}
+
+.site:not(.site--home) {
+  .gei-site-main {
+    padding: 50px 0;
+    background: $color_fond;
+    box-shadow: $shadow_site_section;
+  }
+}
+
+
+@include breakpoint(br(min-width, m)) {
+  .site--home {
+    .gei-site-main {
+      padding: 50px 0 150px 0;
+    }
+  }
+}

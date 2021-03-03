@@ -1,0 +1,39 @@
+{
+  "name": "vufind-gei-theme",
+  "version": "1.0.0",
+  "description": "VUFIND Theme GEI",
+  "engines": {
+    "node": "6.10.0",
+    "npm": "3.10.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "gulp": "gulp"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "breakpoint-sass": "^2.7.0",
+    "browser-sync": "^2.23.6",
+    "cookieconsent": "^3.0.6",
+    "cs-scss-mixins": "^3.0.0",
+    "cs-scss-normalize": "^1.1.0",
+    "del": "^3.0.0",
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^5.0.0",
+    "gulp-cached": "^1.1.1",
+    "gulp-changed": "^3.2.0",
+    "gulp-debug": "^3.2.0",
+    "gulp-filter": "^5.1.0",
+    "gulp-if": "^2.0.2",
+    "gulp-imagemin": "^4.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.2.0",
+    "gulp-sass-inheritance": "^1.0.0",
+    "gulp-watch": "^4.3.5",
+    "require-dir": "^1.0.0",
+    "run-sequence": "^2.2.1",
+    "sass-svg-uri": "^1.0.0"
+  },
+  "private": true,
+  "license": "© Christoph Schüßler"
+}

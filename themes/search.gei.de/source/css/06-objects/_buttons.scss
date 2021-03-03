@@ -1,0 +1,26 @@
+.btn {
+  border: 0;
+  border-radius: 0;
+}
+
+.btn-primary {
+  font-weight: 500;
+  color: white;
+  background: $color_brand;
+
+  @include on-event {
+    background: $color_link;
+    color: white;
+  }
+}
+
+.btn-link {
+  font-size: inherit;
+  color: $color_link;
+
+  @include on-event {
+    text-decoration: underline;
+    color: $color_link;
+  }
+}
+

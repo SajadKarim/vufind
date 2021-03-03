@@ -1,0 +1,34 @@
+//////////////////////////
+// breakpoints
+//////////////////////////
+
+$breakpoints: (
+  s: (
+    min-width: null,
+    max-width: 767px
+  ),
+  m: (
+    min-width: 768px,
+    max-width: 991px
+  ),
+  l: (
+    min-width: 992px,
+    max-width: null
+  )
+);
+
+// Return a breakpoint value from the breakpoint map
+// ---
+// @param [string] $dimension: min-width or max-width
+// @param [string] $breakpoint: the map key
+// ---
+// @return [string] the breakpoint value
+@function br($dimension, $breakpoint) {
+  @if (map-has-key($breakpoints, $breakpoint) and map-has-key(map-get($breakpoints, $breakpoint), $dimension)) {
+    @return $dimension map-get(map-get($breakpoints, $breakpoint),$dimension);
+  }
+  @else {
+    @warn 'Map key/value not found';
+  }
+  @return false;
+}

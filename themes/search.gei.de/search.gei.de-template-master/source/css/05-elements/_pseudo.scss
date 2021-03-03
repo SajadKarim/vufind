@@ -1,0 +1,16 @@
+//////////////////////////
+// selection
+//////////////////////////
+::selection {
+  background: $color_brand;
+  color: #fff;
+}
+
+//////////////////////////
+// placeholder
+//////////////////////////
+::placeholder {
+  color: rgba($color_placeholder, .7);
+  opacity: 1;
+  font-weight: 300;
+}

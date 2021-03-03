@@ -1,0 +1,98 @@
+.gei-search {
+  .record-number {
+    display: none;
+  }
+}
+
+.search-header {
+  align-items: center;
+}
+
+.search-stats {
+  font-size: $fs_small;
+  padding: 0;
+  strong {
+    font-weight: 500;
+  }
+}
+
+.search-controls,
+.gei-search__controls {
+  font-size: $fs_small;
+  text-align: left;
+  color: $color_dimmed;
+  .search-sort {
+    @extend %select-tool;
+  }
+}
+
+.bulkActionButtons {
+  font-size: $fs_small;
+
+  .btn-group {
+    .btn {
+      font-weight: 500;
+      margin-right: 2px;
+      padding: 2px 6px;
+      color: $color_link;
+      border-radius: 2px;
+      background: white;
+
+      @include on-event {
+        color: white;
+        background: $color_text;
+      }
+    }
+  }
+}
+
+
+.bulk-checkbox {
+  line-height: 20px;
+  position: relative;
+  vertical-align: middle;
+
+  label {
+    font-weight: 500;
+    position: relative;
+    margin: 2px 0 2px 10px;
+    padding: 0 0 0 26px;
+    &::before,
+    &::after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      content: '';
+    }
+    &::before {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      border: 1px solid $color_line;
+      background-color: white;
+      box-shadow: $shadow_input;
+    }
+    &::after {
+      top: 2px;
+      left: 3px;
+      width: 11px;
+      height: 6px;
+      margin: 4px 0 0 2px;
+      transform: rotate(-45deg);
+      opacity: 0;
+      border-bottom: 2px solid $color_text_light;
+      border-left: 2px solid $color_text_light;
+    }
+  }
+
+  input[type='checkbox'] {
+    position: absolute;
+    top: -400px;
+    left: -400px;
+    opacity: 0; // visually hide but keep user selectable by tabbing
+    &:checked + label::after {
+      opacity: 1;
+    }
+  }
+}

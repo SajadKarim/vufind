@@ -1,0 +1,9 @@
+.alert {
+  border-radius: 0;
+  border: 0;
+}
+
+.alert-success {
+  color: darken($color_darkgreen, 20%);
+  background-color: lighten($color_green, 30%);
+}

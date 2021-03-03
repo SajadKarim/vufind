@@ -1,0 +1,9 @@
+.form-login,
+.form-new-password,
+.form-edit-list {
+  .main & {
+    .form-control {
+      background: white;
+    }
+  }
+}

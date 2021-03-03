@@ -1,0 +1,50 @@
+// //////////////////////
+// Gesta
+// //////////////////////
+/*!
+ * Web Fonts from fontspring.com
+ *
+ * All OpenType features and all extended glyphs have been removed.
+ * Fully installable fonts can be purchased at http://www.fontspring.com
+ *
+ * The fonts included in this stylesheet are subject to the End User License you purchased
+ * from Fontspring. The fonts are protected under domestic and international trademark and
+ * copyright law. You are prohibited from modifying, reverse engineering, duplicating, or
+ * distributing this font software.
+ *
+ * (c) 2010-2013 Fontspring
+ *
+ *
+ *
+ *
+ * The fonts included are copyrighted by the vendor listed below.
+ *
+ * Vendor:      RType
+ * License URL: http://www.fontspring.com/fflicense/rtype
+ *
+ *
+ */
+ @include font-face('Gesta', 'gesta-light-webfont', 'gesta', 300, 'normal');
+@include font-face('Gesta', 'gesta-regular-webfont', 'gesta', 400, 'normal');
+@include font-face('Gesta', 'gesta-medium-webfont', 'gesta', 500, 'normal');
+@include font-face('Gesta', 'gesta-bold-webfont', 'gesta', 700, 'normal');
+
+// //////////////////////
+// Gravur Condensed
+// //////////////////////
+/*!
+ * Legal Disclaimer
+ *
+ * These Fonts are licensed only for use on these domains and their subdomains:
+ * gei.de
+ * daten.herrschuessler.de/GEI/
+ *
+ * It is illegal to download or use them on other websites.
+ *
+ * While the @font-face statements below may be modified by the client, this
+ * disclaimer may not be removed.
+ *
+ * Lineto.com, 2013
+ */
+@include font-face('GravurCondensed', 'lineto-gravurcondensed-regular', 'gravur', 400, 'normal');
+//@include font-face('GravurCondensed', 'lineto-gravurcondensed-bold', 'gravur', 700, 'normal');
