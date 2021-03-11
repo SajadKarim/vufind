@@ -1,0 +1,55 @@
+//////////////////////////
+// colors
+//////////////////////////
+
+// color scheme: primary colors (GEI)
+$color_blue:        #009ee0;
+$color_red:         #b00046;
+$color_deepblue:    #003a64;
+$color_redbrown:    #57002a;
+$color_orange:      #DC661E;
+$color_green:       #acc32b;
+$color_darkgreen:   #147670;
+$color_purple:      #6a2e8c;
+$color_lightbrown:  #c1b88c;
+
+// theme
+$color_brand:       $color_red;
+
+// portal themes
+$theme: (
+  findex: $color_redbrown,
+  cw: $color_deepblue,
+  gei-digital: $color_purple,
+  gei_dzs: $color_darkgreen,
+  edumeres: $color_blue,
+  edu_data: $color_blue,
+  edu_news: $color_blue,
+  edu_reviews: $color_blue,
+  edu_docs: $color_blue,
+  gei_de: $color_red,
+  zwischentoene: $color_orange,
+  worldviews: $color_lightbrown,
+  pruzzenland: $color_green
+);
+
+// elements
+$color_text:        #333;
+$color_text_light:  #4c4c4c;
+$color_dimmed:      #888;
+$color_mute:        #999;
+$color_link:        $color_blue;
+$color_warn:        $color_red;
+$color_line:        #ccc;
+$color_box:         #e0e0e0;
+$color_fond:        #f6f6f6;
+$color_hilight:     rgba($color_red, .1);
+$color_tooltip:     white;
+$color_tooltip_bg:  $color_text;
+
+// form
+$color_form_bg:     $color_fond;
+
+//forms
+$color_placeholder: #797b82;
+

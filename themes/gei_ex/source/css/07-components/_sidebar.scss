@@ -1,0 +1,19 @@
+.sidebar,
+.gei-sidebar {
+  > h4 { // sidebar headline
+    color: $color_text;
+    font-size: $fs_medium;
+    font-weight: 400;
+    margin: 0 0 10px 0;
+  }
+  .facet-group > .help-link {
+    background: white;
+    border: 0;
+    margin: 0 0 5px 0;
+    padding: 6px 8px;
+  }
+}
+
+.gei-sidebar__intro {
+  margin: 0 0 2em 0;
+}

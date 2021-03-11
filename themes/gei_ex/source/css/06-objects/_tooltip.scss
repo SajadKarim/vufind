@@ -1,0 +1,31 @@
+.tooltip {
+  font-family: $font_text;
+  font-size: $fs_tiny;
+  line-height: $lh_base;
+  &.in {
+    opacity: 1;
+  }
+}
+
+.tooltip-inner {
+  max-width: 300px;
+  padding: 6px 8px;
+  color: $color_tooltip;
+  border-radius: 0;
+  background-color: $color_tooltip_bg;
+}
+
+.tooltip-arrow {
+  .tooltip.right & {
+    border-right-color: $color_tooltip_bg;
+  }
+  .tooltip.left & {
+    border-left-color: $color_tooltip_bg;
+  }
+  .tooltip.bottom & {
+    border-bottom-color: $color_tooltip_bg;
+  }
+  .tooltip.top & {
+    border-top-color: $color_tooltip_bg;
+  }
+}

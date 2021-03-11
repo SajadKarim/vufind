@@ -1,0 +1,53 @@
+div.media.bottom_edumeres,
+div.media.bottom_edu_data,
+div.media.bottom_edu_news,
+div.media.bottom_edu_docs,
+div.media.bottom_edu_reviews,
+div.media.bottom_edu_news{ 
+    border-bottom:5px solid #009edf;
+}
+
+div.media.bottom_zwischentoene{ 
+    border-bottom:5px solid #f16908;
+}
+
+div.media.bottom_pruzzenland{ 
+    border-bottom:5px solid #acc32b;
+}
+
+div.media.bottom_gei-digital{ 
+    border-bottom:5px solid #6a2e8c;
+}
+
+div.media.bottom_worldviews{ 
+    border-bottom:5px solid #c1b88c;
+}
+
+div.media.bottom_GEI{ 
+    border-bottom:5px solid #af0046;
+}
+
+div.media.bottom_cw{ 
+    border-bottom:5px solid #425a6c;
+}
+
+div.media.bottom_gei_dzs{ 
+    border-bottom:5px solid #147670;
+}
+
+div.media.bottom_findex{ 
+    border-bottom:5px solid #393d8e;
+}
+
+div.media.bottom_EDISCO{ 
+    border-bottom:5px solid #393d8e;
+}
+
+.list-group-item-ex {
+    padding: 0px;
+    margin: 0px;
+    border: none;
+    background-color: unset;
+    display: block;
+    margin-bottom: 10px;
+}

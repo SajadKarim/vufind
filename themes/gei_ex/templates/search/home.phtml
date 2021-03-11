@@ -1,0 +1,64 @@
+<?php
+  // Set page title.
+  $this->headTitle($this->translate('Search Home'));
+
+  // Disable top search box -- this page has a special layout.
+  $this->layout()->searchbox = false;
+
+  // Set default value if necessary:
+  if (!isset($this->searchClassId)) {
+    $this->searchClassId = 'Solr';
+  }
+
+  $this->layout()->breadcrumbs = false;
+?>
+
+<!-- @Scheel - old code
+<div class="searchHomeContent">
+-->
+<!-- @Scheel - new code -->
+<div class="ge-front">
+<!-- @SajadKarim - The template does not has this heading. <h2><?=$this->transEsc('Text filtering')?></h2>-->
+<div class="gei-front__searchbar role="search">
+<!-- @Scheel - end -->
+  <?php $this->slot('search-home-hero')->start() ?>
+    <?=$this->context($this)->renderInContext("search/searchbox.phtml", ['ignoreHiddenFilterMemory' => true])?>
+    <?=$this->inlineScript(\Laminas\View\Helper\HeadScript::SCRIPT, '$("#searchForm_lookfor").focus();', 'SET'); ?>
+  <?=$this->slot('search-home')->end() ?>
+</div>
+
+   <?php $this->headScript()->appendFile('vendor/scrollbar/jquery.scrollbar.min.js'); ?>
+ <?php $this->headScript()->appendFile('vendor/scrollbar/jquery.scrollbar.js'); ?>
+ <?php $this->headLink()->appendStylesheet('vendor/jquery.scrollbar.css'); ?>
+
+<?php
+$script = <<<JS
+$(document).ready(function() {
+ $("#front-page-facets-div2 > div > div").scrollbar();
+
+ /*needed for j-tree element:  scroll-content */
+ /*$(".scroll-content").css("padding-left", "15px");*/
+ 
+   /*$("#facet_class_local_iln_l").scrollbar();*/
+  /*
+  $("#facet_class_local_iln_l").slider({
+	  reversed : true,
+	  min  : 0,
+	  max  : 10, 
+	  step : 1,
+	  value: 0, 
+	  orientation: 'vertical', 
+	  tooltip_position:'left'
+  });
+  */
+  
+});
+JS;
+?>
+<?=$this->inlineScript(\Zend\View\Helper\HeadScript::SCRIPT, $script, 'SET'); ?>
+
+</div>
+
+<!--@SajadKarim - The provided sample does not show facets but its html has code related to hierarchical factes therefore commenting it out than removing it at all.
+?=implode('', array_map([$this, 'contentBlock'], $blocks ?? []))?
+-->

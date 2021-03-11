@@ -1,0 +1,193 @@
+.hero--bgimg {
+/*	background-image: url('../../../themes/gei/images/header-img-tbc@2x.jpg');*/
+}
+/*more compact hierarchical facests*/
+.jstree-children{
+	padding-left: 20px;
+}
+/*for hierarchical facet to see the control buttons*/
+/*
+#front-page-facets-div > div > div {
+    padding-left:15px;
+}
+*/
+.jstree-icon{
+  color: #b00046;
+  font-size: 22px;
+}
+
+.jstree-leaf{
+	padding-left: 5px;
+}
+
+/*
+.jstree-icon::before{
+  margin-left:0px;
+}
+
+.jstree-anchor::before{
+  margin-left:10px;
+}
+*/
+
+.facet .jstree-icon::before{
+  margin-left:5px;
+  width: 15px;
+}
+
+.label-cat {
+    background-color: #b00046;
+}
+.sidebar  .main{
+	color: #555;
+}
+.blue-font{
+	color: #009EE0;
+}
+
+.bold-font{
+	font-weight: bold;
+	clear: both;
+}
+.record-tabs{
+	background: white;
+}
+.sidebar .applied{
+    color: #FFF;
+}
+.narrow-toggle{
+	cursor: pointer;
+}
+.format.unknown{
+	display:none;
+}
+.edu-nav__list{
+	width:100%;
+}
+.edu-nav__item.right{
+	float:right;
+}
+.modal-dialog pre{
+	background-color: #FFF;
+}
+
+.flyer-page1 {
+	background-image: url('../../../themes/gei_test/images/itbc_flyer_page1.png');
+	background-repeat: no-repeat;
+	background-size: 615px 645px;
+	width: 615px;
+	height: 645px;
+}
+.flyer-page2 {
+	background-image: url('../../../themes/gei_test/images/itbc_flyer_page2.png');
+	background-size: 615px 645px;
+	width: 615px;
+	height: 645px;
+}
+
+i.fa-preview {
+    background-image: url('../../../themes/gei/images/icons/page_white_paste.png')
+}
+.media {
+    margin-top: 0px;
+	position: relative;
+}
+
+.media-right{
+	right: 0px;
+    top: 0px;
+	position: absolute;
+}
+.fa-fw{
+  background-color: white;
+}
+.sidebar .list-group-item.active .main {
+	color: white;
+}
+.sidebar .list-group-item.active .badge {
+    color: white;
+}
+.sidebar .list-group-item.active:hover .jstree-icon{
+  color: #009ee0;
+}
+.sidebar .applied{
+  background-color:#009ee0;
+}
+.cat-title{
+	background-color: #009EE0;
+	    border-color: #009EE0;
+}
+
+.autocomplete-results  span{
+	font-weight: bold;
+	color:#b00046;
+}
+
+.autocomplete-results  .badge{
+	font-weight: bold;
+	color:#ffffff;
+	float: right;
+	margin-left: 10px;
+}
+
+.autocomplete-results a.selected > span{
+	color:white;
+}
+.autocomplete-results  a:hover,
+.autocomplete-results  a{
+	text-decoration: none;
+	color: #555;
+}
+.unknown_count,.narrow-toggle{
+    font-style: italic;
+    /*text-align: right;
+    padding-right: 5px;*/
+	opacity: 0.7;
+}
+
+@media (min-width: 768px) {
+    .modal-dialog {
+        width: 80%;
+    }
+}
+.list-group-item  a,
+li.list-group-item {
+    color: #555;
+}
+.list-group-item  a>i{
+    color: #b00046;
+}
+
+
+li.list-group-item:hover,
+li.list-group-item:focus ,
+div.list-group-item:not(.title):hover,
+div.list-group-item:not(.title):focus ,
+div.list-group-item a:hover,
+div.list-group-item a:focus {
+    text-decoration: none;
+    color: #555;
+    background-color: #eee;
+}
+div.list-group-item > a{
+	display:block;
+}
+.location2 ul,
+.holdings-tab ul,
+.table-striped ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+}
+.location2 li:before,
+.holdings-tab li:before,
+.table-striped li:before{
+	font-family: 'FontAwesome';
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: inherit;
+    content: "\f105";
+	color: lightgray;
+    padding-right: 5px;
+}

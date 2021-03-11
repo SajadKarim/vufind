@@ -1,0 +1,49 @@
+.gei-advanced {
+  .adv-group {
+    border: 0;
+    border-radius: 0;
+    background: white;
+    box-shadow: $shadow_card;
+    legend {
+      margin: -1rem -1rem 1rem -1rem;
+      padding: 8px 1rem;
+      font-size: $fs_base;
+      text-transform: uppercase;
+      color: $color_dimmed;
+      width: calc(100% + 2rem);
+      box-sizing: border-box;
+    }
+  }
+  .adv-group-close {
+    color: $color_warn;
+  }
+  .solr-facets {
+    margin: 0;
+    + .range {
+      margin-top: 2rem;
+    }
+  }
+  .solr-facet-container {
+    margin: -.5rem;
+  }
+  .solr-adv-facet {
+    padding: .5rem;
+  }
+  .btn {
+    font-size: $fs_base;
+  }
+}
+
+.gei-advanced__action {
+  font-size: $fs_small;
+}
+
+.gei-advanced__extra {
+  margin: 40px 0 0 0;
+
+  fieldset {
+    width: 100%;
+    float: none;
+    padding: 0;
+  }
+}

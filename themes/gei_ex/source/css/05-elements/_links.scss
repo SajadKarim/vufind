@@ -1,0 +1,9 @@
+a {
+  color: $color_link;
+  text-decoration: none;
+
+  @include on-event {
+    color: $color_link;
+    text-decoration: underline;
+  }
+}

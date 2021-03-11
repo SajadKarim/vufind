@@ -1,0 +1,11 @@
+<?php
+	$uri = $_SERVER['REQUEST_URI'];
+	$uri2 = $this->url('search-results');
+	if (strrpos($uri, $uri2) === false) {
+		$uri = $uri2.'?';//we are not on a result page
+	}else{
+		$uri = $uri.'&';
+	}
+	$lf = str_replace(array("[", "]"), "", $this->lookfor);
+?>
+<?=$uri?>filter[]=publisher_place_str_mv:%22<?=urlencode($lf)?>%22

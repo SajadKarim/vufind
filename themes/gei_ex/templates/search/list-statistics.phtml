@@ -1,0 +1,281 @@
+<? if (!isset($this->indexStart)) $this->indexStart = 0; ?>
+
+<? $facetList = is_object($this->results) ? $this->results->getFacetList() : array(); ?>
+<? $this->headScript()->appendFile('vendor/chartjs/Chart.js'); ?>
+
+
+<? if (isset($facetList) && is_array($facetList)): ?>
+	 <? $filterList = $results->getParams()->getFilterList(true); if (!empty($filterList)): ?>
+		<? foreach ($filterList as $field => $filters): ?>
+			<? foreach ($filters as $i => $filter): ?>
+			  <? if(isset($filter['field']) && $filter['field'] === "textbook_catalogue_hierarchical_str_mv"  && (!isset($filter['operator']) || $filter['operator'] != "NOT")){ //scheel 
+					$catalogueSelected = $filter['value'];//only one canbe selected at a time
+				 }
+				 //TODO note filter list for excel file
+			  ?>
+			<? endforeach; ?>
+		<? endforeach; ?>
+	 <? endif; ?>
+	 <? foreach ($facetList as $field => $details): ?>
+	 
+	 <? if (substr($field, 0,  9) == 'catalogue' && !isset($catalogueSelected)){continue;}?>
+		<div class="row statistics-row">
+			<h2 class="<?= ((isset($field) && substr($field, 0,  9) == 'catalogue') && isset($catalogueSelected))?'cat-title':'title' ?>"><?= ((isset($field) && substr($field, 0,  9) == 'catalogue') && isset($catalogueSelected))?$catalogueSelected:'' ?> <?=$this->transEsc($details['label'])?></h2>
+			<div class="group">
+			
+			<? $comment = 'Benutzte Suchspezifikation: folgt ...'; ?>
+			<!--div id="legend_<?=$this->escapeHtml($field)?>"></div-->
+			<? $js_data_encoded3 = '[]'; ?>
+			<? 
+				$js_data_encoded4 = '[]';/*used for complete and sorted excel data*/ 
+				$js_data4 = [];
+			?>
+			<? if ($field=='publishDate'): ?><?//scheel: needs facet_limit_by_field[publishDate] = -1 ?>
+				<canvas id="chart3_<?=$this->escapeHtml($field)?>" width="700" height="400"></canvas>
+				<? $js_line_data = [];?>
+				<? 
+				$js_line_label = [];
+				$publishDatefrom = $_GET['publishDatefrom'];
+				$publishDateto = $_GET['publishDateto'];
+				if($publishDatefrom==null || $publishDatefrom.length==0){
+					$publishDatefrom = date("Y");
+					foreach ($details['list'] as $d){
+						if (!empty($d) && ((int)($d['displayText'])) < $publishDatefrom){
+							$publishDatefrom = ((int)($d['displayText']));
+						}
+					}
+				}
+				if($publishDateto==null || $publishDateto.length==0){
+					$publishDateto = $publishDatefrom;
+					foreach ($details['list'] as $d){
+						if (!empty($d) && ((int)($d['displayText'])) > $publishDateto){
+							$publishDateto = ((int)($d['displayText']));
+						}
+					}
+				}
+				for ($i = $publishDatefrom; $i <= $publishDateto; $i++) {
+					if(($i % 10) == 0){ 
+						$js_line_label[] = $i;
+					}else{
+						$js_line_label[] = '';
+					}
+					
+					$dd = 0;
+					foreach ($details['list'] as $d){
+						if (!empty($d) && $d['displayText'] == (string)$i){
+							$dd = $d['count'];
+							break;
+						}
+					}
+					$js_line_data[] = $dd;
+
+					$current_data = [];
+					$current_data['value'] =$dd;
+					$current_data['label'] =(string)$i;
+					$js_data4[] = $current_data;
+					
+				}
+				?>
+				<? 
+				$js_data3 = [];
+				$js_data3['labels'] = $js_line_label;
+				$js_data3['datasets'] = [];
+				$js_data3_data = [];
+				$js_data3_data['label'] = 'Erscheinungsjahr';
+				$js_data3_data['fillColor'] = 'rgba(0, 158, 224, 1)';
+				$js_data3_data['data'] = $js_line_data;
+				$js_data3['datasets'][] = $js_data3_data;
+				$js_data_encoded3 = json_encode($js_data3);
+				
+				$js_data_encoded4 = json_encode($js_data4);
+				?>
+			<? endif; ?>
+			<div class="statistics-container-div">
+				<div style="display:none;" id="div_<?=$this->escapeHtml($field)?>" class="statistics-div">
+					<div>
+						<canvas id="chart_<?=$this->escapeHtml($field)?>" width="350" height="350"></canvas>
+					</div>	
+					<span><?=sprintf($this->transEsc('fraction_complete'),$this->transEsc($details['label']))?></span>
+				</div>
+				<div id="div2_<?=$this->escapeHtml($field)?>" class="statistics-div">
+					<div>
+						<canvas id="chart2_<?=$this->escapeHtml($field)?>" width="350" height="350"></canvas>
+					</div>
+					<span><?=sprintf($this->transEsc('fraction_feature'),$this->transEsc($details['label']))?></span>
+				</div>
+			</div>
+			<? 
+			$js_data = [];
+			$data_count = 0;
+			
+			$rest = 0;
+			$max = 100;
+			
+			if(sizeof($details['list']) < $max){
+				$max = sizeof($details['list']);
+			}
+			
+			$i = 0;
+			$unknown = null;
+			foreach ($details['list'] as $d){
+			  if (++$i > $max){
+					$rest = $rest + $d['count'];
+			  }else{
+				  if (!empty($d)){
+					/* {"value":"216:l000","displayText":"Deutschland","count":76503,"operator":"AND","isApplied":false} */
+					$str = $d['displayText'];
+					if(isset($str) && substr($str, -1 ) == '/'){ //ends with slash (-> is hierarchical -> reduce to the last part)
+						$str = substr($str, 0, strlen($str)-1);	
+						if(strripos( $str, '/' ) > -1){
+							$str = substr($str, strripos( $str, '/' )+1);
+							$str = $this->transEsc($str);
+						}
+					}
+					
+					$data_count = $data_count + $d['count'];
+					$current_data = [];
+					$current_data['value'] =$d['count'];
+					$current_data['label'] =$str;
+					if($this->transEsc('Unknown')==$str){
+						$unknown = $current_data;
+					}else{
+						$js_data[] = $current_data;
+					}
+				  }else{
+					  $i--; 
+				  }
+			  }
+			}
+			$js_data_encoded2 = '[]'; 
+			?>
+			
+			<?
+			/*sort (level of eduction might be unsorted)*/
+			usort($js_data, function($a, $b) {
+				return $b['value'] - $a['value'];
+			});	
+			for ($i = 0; $i < sizeof($js_data); $i++) {
+				$js_data[$i]['color'] = "rgba(0, 158, 224, ".max(0.1,(1.0-((1.0/sizeof($js_data))*$i))).")";
+				/*TODO Einträge müssen eventuell html-escaped werden: http://vufind.gei.de/vufind2/Search/Results?lookfor=europe*&type=AllFields&view=statistics*/
+			}
+			?>
+			
+			<?
+			if ($rest>0){
+				$current_data = [];
+				$current_data['value'] = $rest;
+				$current_data['label'] = 'Rest';
+				$current_data['color'] = '#fff';
+				$js_data[] = $current_data;
+			}
+			?>
+			
+			<?
+			$js_data_encoded2 = json_encode($js_data);
+			
+			if($unknown!=null){
+				$unknown['color'] = '#F2F2F2';
+				$js_data[] = $unknown;
+			}
+			?>
+			
+			
+			<? $js_data_encoded = json_encode($js_data); ?>
+			<? 
+				if($js_data_encoded4 && $js_data_encoded4 != '[]'){
+					$excel_data_encoded = $js_data_encoded4;
+				}else{
+					$excel_data_encoded = $js_data_encoded;
+				}
+			?>
+			
+			<?
+$script = <<<JS
+$(document).ready(function() {
+
+  var ctx = $("#chart_{$this->escapeHtml($field)}").get(0).getContext("2d");
+  var ctx2 = $("#chart2_{$this->escapeHtml($field)}").get(0).getContext("2d");
+  var ctx3 = $("#chart3_{$this->escapeHtml($field)}");
+
+  if(ctx3==null || ctx3.length == 0){
+	  var myNewChart = new Chart(ctx).Pie({$js_data_encoded}, {
+		animateScale: true
+	  });
+  
+	  var myNewChart2 = new Chart(ctx2).Pie({$js_data_encoded2}, {
+		animateScale: true
+	  });
+  
+  
+	  /* chart_* is disabled by default. Pressing the checkbox enables chart_* and disables chart2_* */
+	  $("#cb_{$this->escapeHtml($field)}").change(function(){
+		if(this.checked){
+		  $("#div_{$this->escapeHtml($field)}").css( "display", "inline-block" );
+		  $("#div2_{$this->escapeHtml($field)}").css( "display", "none" );
+		}else{
+		  $("#div2_{$this->escapeHtml($field)}").css( "display", "inline-block" );
+		  $("#div_{$this->escapeHtml($field)}").css( "display", "none" );
+		}
+	  });
+  
+  }else{
+	  $("#div2_{$this->escapeHtml($field)}").css( "display", "none" );
+	  $("#div_{$this->escapeHtml($field)}").css( "display", "none" );
+  }
+  /* create csv data */
+  // data:application/csv;charset=utf-8,Col1%2CCol2%2CCol3%0AVal1%2CVal2%2CVal3%0AVal11%2CVal22%2CVal33%0AVal111%2CVal222%2CVal333
+  var data = "data:application/csv;charset=utf-8,%EF%BB%BF";
+  
+  data = data + "{$this->transEsc($details['label'])}%3B{$this->transEsc('vudl_tab_docs')}%3B%3D%22{$this->transEsc($comment)}%22%0A";
+  
+  var table = {$excel_data_encoded};
+  for (var d in table){
+	//alert(JSON.stringify(d));  
+	data = data + encodeURI(table[d]['label']) + "%3B" + table[d]['value'] + "%0A";
+  }
+  $("#excel_{$this->escapeHtml($field)}").attr("data-wpurl", data);
+  $("#excel_{$this->escapeHtml($field)}").mousedown(function(){
+	this.href = $(this).data('wpurl');
+  });
+  
+  
+  /*
+  var legend = myNewChart.generateLegend();
+  $("#legend_{$this->escapeHtml($field)}").html(legend);
+  */
+  
+  
+  if(ctx3 && ctx3.length > 0){
+	  ctx3 = ctx3.get(0).getContext("2d");
+	  var myNewChart3 = new Chart(ctx3).Line({$js_data_encoded3}, {
+		scaleShowGridLines : false,
+		pointDot : false,
+		tooltipTemplate: function (d) {
+            throw '';
+		},
+		datasetFill : true,
+	  });
+  }
+  
+});
+JS;
+?>
+<?=$this->inlineScript(\Zend\View\Helper\HeadScript::SCRIPT, $script, 'SET'); ?>
+				
+				<!--a href="<?=$this->url('home')?>gei/export?facet=<?=$this->escapeHtml($field)?>"><?=$this->transEsc('Export to')?> CSV/Excel</a-->
+				<!--span class="btn btn-primary" id="csv_<?=$this->escapeHtml($field)?>"><?=$this->transEsc('Export to')?> CSV/Excel</span-->
+				<span><?=$this->transEsc('Export to')?>:</span>
+				<a id="excel_<?=$this->escapeHtml($field)?>" download="<?=$this->escapeHtml($field)?>.csv" href="#" title="<?=$this->transEsc('Export to')?> CSV/Excel" ><i class="fa fa-excel"></i></a>
+				<? if ($field!='publishDate'): ?>
+					<div>
+					  <input id="cb_<?=$this->escapeHtml($field)?>" type="checkbox" name="cb_<?=$this->escapeHtml($field)?>" value="true">
+					  <?=sprintf($this->transEsc('fraction_unknown'),$this->transEsc($details['label']))?>.
+					</div>
+				<? endif; ?>
+				</div>
+			</div>
+	 <? endforeach; ?>
+<? endif; ?>
+
+
+
