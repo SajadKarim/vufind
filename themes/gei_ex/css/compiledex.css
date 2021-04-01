@@ -62,3 +62,15 @@ small, .small {
 .reset-filters-btn {
     float: right;
 }
+
+body, button, input, textarea, select {
+    font-size: 14px;
+}
+
+.site:not(.site--home) .gei-site-main {
+    padding: 05px 0;
+}
+
+.breadcrumbs .container {
+    padding:0px;
+}

@@ -184,13 +184,12 @@ JS;
         <div role="main" class="gei-site-main main template-dir-<?=$this->templateDir?> template-name-<?=$this->templateName?>">
       <div id="breadcrumb" class="container">
 
-    <nav class="breadcrumbs" aria-label="<?=$this->transEsc('Breadcrumbs') ?>">
+    <nav class="breadcrumbs" aria-label="<?=$this->transEscAttr('Breadcrumbs') ?>">
       <div class="container">
         <?php if((!isset($this->layout()->showBreadcrumbs) || $this->layout()->showBreadcrumbs == true)
           && !empty($this->layout()->breadcrumbs)
           && $this->layout()->breadcrumbs !== false
         ): ?>
-          <!-- @Scheel - old code
           <ul class="breadcrumb hidden-print">
             <?php if(is_array($this->layout()->breadcrumbs)): ?>
               <?php if(count($this->layout()->breadcrumbs) > 1): ?>
@@ -209,7 +208,6 @@ JS;
               <?=$this->layout()->breadcrumbs ?>
             <?php endif; ?>
           </ul>
-          -->
         <?php endif; ?>
       </div>
     </nav>

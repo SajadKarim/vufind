@@ -31,10 +31,9 @@ $headTitle = $this->slot('head-title')
       ]
   );
 
-  /* @Scheel - old code
   // Set up breadcrumbs:
   $this->layout()->breadcrumbs .= '<li class="active">' . $this->escapeHtml($headTitle) . '</li>';
- */
+ 
   // Enable cart if appropriate:
   $this->showBulkOptions = $this->params->getOptions()->supportsCart() && $this->showBulkOptions;
   // Checkboxes if appropriate:
