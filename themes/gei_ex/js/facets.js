@@ -15,9 +15,9 @@ function buildFacetNodes(data, currentPath, allowExclude, excludeTitle, counts)
     var $i = $('<i/>').addClass('fa');
     if (this.operator === 'OR') {
       if (this.isApplied) {
-        $i.addClass('fa-check-square-o').attr('title', VuFind.translate('Selected'));
+        $i.addClass('fa fa-check pull-right').attr('title', VuFind.translate('Selected'));
       } else {
-        $i.addClass('fa-square-o').attr('aria-hidden', 'true');
+        $i/*.addClass('fa-square-o')*/.attr('aria-hidden', 'true');
       }
       $i.appendTo($item);
       $item.append(' ');
@@ -47,7 +47,7 @@ function buildFacetNodes(data, currentPath, allowExclude, excludeTitle, counts)
           .addClass('exclude')
           .attr('href', excludeUrl)
           .attr('title', excludeTitle);
-        $('<i/>').addClass('fa fa-times').appendTo($a);
+        $('<i/>')/*.addClass('fa fa-times')*/.appendTo($a);
         $a.appendTo($html);
       }
     }
